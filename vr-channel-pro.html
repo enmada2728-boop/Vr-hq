@@ -4,10 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#050508">
-<title>VR Creator HQ — Ultimate</title>
+<title>VR Creator HQ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Markdown Parser for beautiful text -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   :root {
@@ -51,11 +53,29 @@
   textarea, input[type="text"], input[type="password"], select { width: 100%; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; color: var(--text); font-size: 15px; font-family: inherit; margin-bottom: 14px; transition: all 0.2s; outline: none; }
   textarea { min-height: 100px; resize: vertical; }
   textarea:focus, input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15); background: rgba(0, 0, 0, 0.5); }
-  .output { background: #030304; border: 1px solid var(--border); border-radius: 14px; padding: 16px; font-size: 13px; white-space: pre-wrap; word-wrap: break-word; max-height: 450px; overflow-y: auto; margin-top: 12px; display: none; font-family: 'JetBrains Mono', monospace; line-height: 1.7; color: #cbd5e1; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); }
+  
+  /* BEAUTIFUL OUTPUT STYLING */
+  .output { 
+    background: #0a0a0f; border: 1px solid var(--border); border-radius: 16px; padding: 20px; 
+    font-size: 14.5px; line-height: 1.7; max-height: 600px; overflow-y: auto; margin-top: 12px; 
+    display: none; color: #e2e8f0; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); 
+  }
   .output.show { display: block; animation: fadeUp 0.3s ease; }
   .output::-webkit-scrollbar { width: 6px; }
-  .output::-webkit-scrollbar-track { background: transparent; }
-  .output::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 10px; }
+  .output::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 10px; }
+  
+  /* Markdown CSS Overrides */
+  .output h1, .output h2, .output h3 { color: #fff; margin-top: 20px; margin-bottom: 10px; font-weight: 700; line-height: 1.3; }
+  .output h1 { font-size: 20px; border-bottom: 1px solid #27272a; padding-bottom: 8px; }
+  .output h2 { font-size: 18px; }
+  .output h3 { font-size: 16px; color: #a78bfa; }
+  .output p { margin-bottom: 14px; }
+  .output strong { color: #fff; font-weight: 600; }
+  .output ul, .output ol { margin-left: 20px; margin-bottom: 16px; }
+  .output li { margin-bottom: 8px; }
+  .output code { background: rgba(139, 92, 246, 0.15); color: #c4b5fd; padding: 2px 6px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  .output blockquote { border-left: 3px solid var(--accent); margin: 14px 0; padding-left: 14px; color: #94a3b8; font-style: italic; }
+
   .tag { display: inline-flex; align-items: center; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 8px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; gap: 4px; }
   .tag.live { background: rgba(16, 185, 129, 0.1); color: var(--live); border: 1px solid rgba(16, 185, 129, 0.2); }
   .tag.manual { background: rgba(245, 158, 11, 0.1); color: var(--warn); border: 1px solid rgba(245, 158, 11, 0.2); }
@@ -83,7 +103,7 @@
 
 <header>
   <h1>VR Creator <span>HQ</span></h1>
-  <span class="badge">● ULTIMATE</span>
+  <span class="badge">● ZERO-GUESS</span>
 </header>
 
 <main>
@@ -91,7 +111,7 @@
 <div id="s-dashboard" class="section active">
   <div class="card">
     <h2>Command Centre</h2>
-    <p>Type a request. The system routes it to the best available AI model and synthesizes live data.</p>
+    <p>Type a request. The system now forces AI to analyze real transcripts and comments.</p>
     <textarea id="commandBox" placeholder='e.g. "Find the best VR gaming Shorts opportunities today"'></textarea>
     <button onclick="runCommand()">Run Command</button>
     <button class="secondary" onclick="runFullWorkflow()" style="margin-top: 8px;">▶ Run Full Workflow</button>
@@ -104,7 +124,7 @@
       <div class="stat"><div class="num" id="statSearches">0</div><div class="desc">Live Searches</div></div>
     </div>
     <div class="notice" style="margin-top:16px;margin-bottom:0">
-      <strong>Multi-Model Engine:</strong> Active. Auto-routes between Gemini, Groq, and OpenRouter. Reads transcripts and forces data synthesis.
+      <strong>Zero-Assumption Protocol:</strong> AI is forbidden from using its internal memory. It must prove what the game is using the live YouTube data.
     </div>
   </div>
 </div>
@@ -112,8 +132,8 @@
 <div id="s-trends" class="section">
   <div class="card">
     <h2>YouTube VR Trend Hunter</h2>
-    <span class="tag live">● MULTI-AI SYNTHESIS</span>
-    <p>Calculates Outlier Scores, reads transcripts, and uses Chain-of-Thought analysis.</p>
+    <span class="tag live">● DATA MINING</span>
+    <p>Fetches recent videos, calculates their views vs channel subscribers, and reads transcripts.</p>
     <label class="label">Search Query</label>
     <input type="text" id="trendQuery" value="VR gaming" placeholder="VR gaming">
     <label class="label">Days to look back</label>
@@ -127,8 +147,8 @@
 <div id="s-ideas" class="section">
   <div class="card">
     <h2>Viral VR Video Ideas</h2>
-    <span class="tag live">● GAP ANALYSIS</span>
-    <p>Combines game knowledge with live transcript and comment analysis.</p>
+    <span class="tag live">● ZERO GUESSING</span>
+    <p>Uses strict data constraints. It will first prove what the game is using the data, then give ideas.</p>
     
     <label class="label">Game or Context</label>
     <textarea id="ideaInput" placeholder="Enter a game (e.g. Blade & Sorcery), or leave blank and hit randomise..." style="min-height:80px"></textarea>
@@ -226,11 +246,11 @@
 <div id="s-settings" class="section">
   <div class="card">
     <h2>Settings & API Keys</h2>
-    <p>Keys are stored only in this browser on this phone. Add as many as you like; the app will auto-route if one fails.</p>
+    <p>Keys are stored only in this browser on this phone.</p>
     
     <label class="label">Preferred AI Engine</label>
     <select id="aiEngineSelect">
-      <option value="auto">Auto-Route (Fastest & Smartest)</option>
+      <option value="auto">Auto-Route (Best Quality)</option>
       <option value="gemini">Force Gemini</option>
       <option value="groq">Force Groq (Ultra Fast)</option>
       <option value="openrouter">Force OpenRouter</option>
@@ -252,14 +272,6 @@
     <input type="password" id="transcriptKeyInput" placeholder="Paste your Transcript API Key">
     
     <button onclick="saveKeys()">Save All Keys</button>
-    <hr>
-    <p><strong>Free Limits Reminder:</strong><br>
-    YouTube: ~100/day<br>
-    Gemini: 1,500/day<br>
-    Groq: 1,000/day<br>
-    OpenRouter: 50/day<br>
-    Transcript: 10/day</p>
-    <button class="danger" onclick="clearAllReports()">Clear All Stored Data</button>
   </div>
 </div>
 
@@ -363,17 +375,17 @@ function toast(msg) {
 
 function setOut(id, text) {
   const el = document.getElementById(id);
-  el.textContent = text;
+  el.innerHTML = marked.parse(text); 
   el.classList.add('show');
 }
 
 function appendOut(id, text) {
   const el = document.getElementById(id);
-  el.textContent += text;
+  el.innerHTML += marked.parse(text + "\n\n");
 }
 
 function copyOutput(id) {
-  const text = document.getElementById(id).textContent;
+  const text = document.getElementById(id).innerText;
   if (!text) { toast('Nothing to copy yet'); return; }
   navigator.clipboard.writeText(text).then(() => toast('Copied to clipboard')).catch(() => {
     const ta = document.createElement('textarea');
@@ -399,9 +411,9 @@ async function fetchTranscript(videoId, statusCallback) {
 async function youtubeSearch(query, days, statusCallback) {
   if (!YT_KEY) throw new Error('YouTube API Key missing. Go to Settings and add it.');
   const publishedAfter = new Date(Date.now() - days * 86400000).toISOString();
-  const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&order=relevance&publishedAfter=${publishedAfter}&maxResults=3&key=${YT_KEY}`;
+  const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&order=viewCount&publishedAfter=${publishedAfter}&maxResults=4&key=${YT_KEY}`;
   
-  statusCallback(`⏳ Searching YouTube for recent "${query}" videos...`);
+  statusCallback(`⏳ Searching YouTube for the most viewed "${query}" videos...`);
   const searchRes = await fetch(searchUrl);
   if (!searchRes.ok) {
     const err = await searchRes.json().catch(() => ({}));
@@ -490,10 +502,6 @@ async function youtubeSearch(query, days, statusCallback) {
   return detailedVideos;
 }
 
-// ==========================================
-// MULTI-MODEL AI ROUTER
-// ==========================================
-
 async function callGemini(prompt, isCreative) {
   if (!GEMINI_KEY) throw new Error('Gemini Key missing');
   const modelsToTry = workingModel && GEMINI_MODELS.includes(workingModel)
@@ -505,7 +513,7 @@ async function callGemini(prompt, isCreative) {
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_KEY}`;
       const body = {
         contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { temperature: isCreative ? 0.85 : 0.4, maxOutputTokens: 2048 }
+        generationConfig: { temperature: isCreative ? 0.7 : 0.1, maxOutputTokens: 2500 }
       };
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 30000);
@@ -531,9 +539,9 @@ async function callGroq(prompt, isCreative) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
     body: JSON.stringify({
-      model: "openai/gpt-oss-120b", // Fast and smart
+      model: "llama-3.3-70b-versatile",
       messages: [{ role: "user", content: prompt }],
-      temperature: isCreative ? 0.85 : 0.4
+      temperature: isCreative ? 0.7 : 0.1
     })
   });
   if (!res.ok) throw new Error('Groq API error');
@@ -548,9 +556,9 @@ async function callOpenRouter(prompt, isCreative) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${OPENROUTER_KEY}`, 'HTTP-Referer': 'https://vr-creator-hq.app' },
     body: JSON.stringify({
-      model: "meta-llama/llama-3.3-70b-instruct:free", // Free tier
+      model: "meta-llama/llama-3.3-70b-instruct:free",
       messages: [{ role: "user", content: prompt }],
-      temperature: isCreative ? 0.85 : 0.4
+      temperature: isCreative ? 0.7 : 0.1
     })
   });
   if (!res.ok) throw new Error('OpenRouter API error');
@@ -560,20 +568,14 @@ async function callOpenRouter(prompt, isCreative) {
 
 async function callAI(prompt, statusCallback, isCreative = false) {
   let enginesToTry = [];
-  
-  if (PREFERRED_AI === 'gemini') enginesToTry = ['gemini'];
-  else if (PREFERRED_AI === 'groq') enginesToTry = ['groq'];
-  else if (PREFERRED_AI === 'openrouter') enginesToTry = ['openrouter'];
-  else {
-    // Auto-Route: try Gemini first, then Groq, then OpenRouter
-    enginesToTry = ['gemini', 'groq', 'openrouter'];
-  }
+  if (PREFERRED_AI === 'auto') enginesToTry = ['gemini', 'groq', 'openrouter'];
+  else enginesToTry = [PREFERRED_AI];
 
   let lastError = '';
 
   for (const engine of enginesToTry) {
     try {
-      statusCallback(`🧠 Asking ${engine.toUpperCase()} to run analysis...`);
+      statusCallback(`🧠 Asking ${engine.toUpperCase()} to analyze the data...`);
       let result = '';
       if (engine === 'gemini') result = await callGemini(prompt, isCreative);
       if (engine === 'groq') result = await callGroq(prompt, isCreative);
@@ -581,16 +583,10 @@ async function callAI(prompt, statusCallback, isCreative = false) {
       if (result) return result;
     } catch (e) {
       lastError = e.message;
-      // Continue to next engine in Auto-Route mode
     }
   }
-
-  throw new Error(`All AI engines failed. Last error: ${lastError}. Please check your API keys and limits.`);
+  throw new Error(`All AI engines failed. Last error: ${lastError}`);
 }
-
-// ==========================================
-// ACTIONS
-// ==========================================
 
 async function runTrendHunter() {
   const btn = document.getElementById('btnTrend');
@@ -602,43 +598,48 @@ async function runTrendHunter() {
 
   btn.disabled = true; btn.textContent = 'Working...';
   out.classList.add('show');
-  setOut('out-trends', '');
+  out.innerHTML = '';
 
-  const status = (msg) => appendOut('out-trends', msg + '\n\n');
+  const status = (msg) => appendOut('out-trends', `*${msg}*`);
 
   try {
     const videos = await youtubeSearch(query, days, status);
     if (videos.length === 0) {
-      appendOut('out-trends', 'No recent videos found. Try a broader search.');
+      appendOut('out-trends', '### No recent videos found.\nTry a broader search.');
       return;
     }
     
     const videoList = videos.map((v, i) => {
       let commentText = v.comments.length > 0 ? `Comments: "${v.comments.slice(0,3).join(' | ')}"` : 'Comments disabled.';
-      let transcriptSnippet = v.transcript.substring(0, 2000); 
+      let transcriptSnippet = v.transcript.substring(0, 2500); 
       return `${i+1}. "${v.title}" by ${v.channel}\n   Outlier Score: ${v.outlierScore}\n   Transcript Snippet: "${transcriptSnippet}..."\n   ${commentText}`;
     }).join('\n\n');
     
-    appendOut('out-trends', `✅ Found ${videos.length} videos and calculated Outlier Scores.\n\n`);
+    appendOut('out-trends', `✅ Found ${videos.length} videos and read transcripts.\n\n---\n\n`);
     
-    const prompt = `You are an elite YouTube data analyst for VR gaming.
+    const prompt = `You are a ruthless YouTube data analyst for VR gaming.
     
-    I have provided real data, including an "Outlier Score" (Views divided by Subscribers). A score above 1.0x means the video went viral outside the creator's usual audience.
+    I have provided real data. DO NOT GUESS. If you make a claim, you MUST quote the provided transcript or comments to prove it.
     
+    DATA:
     ${videoList}
     
-    IMPORTANT: You MUST follow this exact Chain-of-Thought structure. Cite [Transcript] or [Comments] to prove your points.
+    ## 1. THE OUTLIER
+    Which video is the biggest outlier (highest views compared to channel size)? Why did it work? Quote the transcript.
     
-    STEP 1: OUTLIER ANALYSIS. Which video is the biggest outlier? Why did it work?
-    STEP 2: AUDIENCE PSYCHOLOGY. Based on the comments, what are viewers actually craving?
-    STEP 3: CONTENT STRATEGY. Based on the transcript, what specific hook or pacing worked?
-    STEP 4: MARKET GAP. What is the specific opportunity here for a small creator?
-    STEP 5: ACTIONABLE NEXT STEP. Give one highly specific video idea.`;
+    ## 2. AUDIENCE PSYCHOLOGY
+    What are viewers actually asking for? Quote at least two specific comments.
+    
+    ## 3. THE MARKET GAP
+    Based on the data, what is a specific video idea a small creator could make that fills a gap?
+    
+    ## 4. ACTIONABLE IDEA
+    Give one highly specific video idea with a title and hook.`;
     
     const analysis = await callAI(prompt, status, false);
-    appendOut('out-trends', `--- AI STRATEGIC ANALYSIS ---\n${analysis}`);
+    appendOut('out-trends', analysis);
   } catch (e) {
-    appendOut('out-trends', `\n❌ Error: ${e.message}`);
+    appendOut('out-trends', `❌ **Error:** ${e.message}`);
   } finally {
     btn.disabled = false; btn.textContent = 'Search Live Trends';
   }
@@ -658,9 +659,9 @@ async function runIdeaResearcher(isRandom) {
 
   btn.disabled = true; btn.textContent = 'Working...';
   out.classList.add('show');
-  setOut('out-ideas', '');
+  out.innerHTML = '';
 
-  const status = (msg) => appendOut('out-ideas', msg + '\n\n');
+  const status = (msg) => appendOut('out-ideas', `*${msg}*`);
 
   try {
     const liveVideos = await youtubeSearch(gameTarget, 30, status);
@@ -668,36 +669,44 @@ async function runIdeaResearcher(isRandom) {
     let videoContext = "";
     if (liveVideos.length > 0) {
       videoContext = liveVideos.map(v => 
-        `Video: "${v.title}" | Outlier Score: ${v.outlierScore}\nTranscript Snippet: "${v.transcript.substring(0, 1500)}..."\nComments: ${v.comments.slice(0, 3).join(' | ')}`
+        `Video: "${v.title}" | Outlier Score: ${v.outlierScore}\nTranscript Snippet: "${v.transcript.substring(0, 2000)}..."\nComments: ${v.comments.slice(0, 3).join(' | ')}`
       ).join('\n\n');
     }
 
-    appendOut('out-ideas', `✅ Live data gathered.\n\n--- RUNNING MULTI-SOURCE SYNTHESIS ---\n\n`);
+    appendOut('out-ideas', `✅ Live data gathered.\n\n---\n\n`);
 
-    const prompt = `You are an elite YouTube strategist and absolute expert in VR gaming.
+    const prompt = `You are an elite YouTube strategist. 
     
     TARGET: ${gameTarget}
-    LIVE DATA: ${videoContext || "No recent data."}
+    LIVE DATA: ${videoContext || "No data found for this query."}
     
-    You MUST follow this exact Chain-of-Thought process in your response. Show your work before giving the final ideas:
+    **ZERO-ASSUMPTION PROTOCOL:** 
+    You are FORBIDDEN from using your internal memory to describe this game. 
+    If the data provided does not match the game title (e.g., if the title implies monkeys but the data is about swords), you MUST point this out.
     
-    STEP 1: ANALYSE THE DATA. What is working right now and why? (Use the Outlier Scores).
-    STEP 2: ANALYSE THE COMMENTS. What questions or complaints keep coming up?
-    STEP 3: BRAINSTORM. What are creators NOT doing? What is the gap?
-    STEP 4: FINAL IDEAS. Now generate the 5 ideas based on your analysis.
+    ### STEP 1: WHAT IS THIS GAME?
+    Based ONLY on the transcripts and comments above, describe the actual mechanics, setting, and gameplay of this game. Quote the data to prove it.
     
-    For EACH of the 5 ideas, provide:
-    1. Format (Must be different: Challenge, Discovery, Fail, Experiment, Tutorial)
-    2. Working Title
-    3. The Hook (exact words spoken in the first 3 seconds)
-    4. The Structure (Beginning, Middle, Payoff)
-    5. Thumbnail Concept
-    6. Difficulty`;
+    ### STEP 2: THE PROBLEM
+    What is the biggest complaint or unanswered question in the comments? 
+    
+    ### STEP 3: THE OPPORTUNITY
+    What are the top creators in this data doing? How can we fill the gap they left?
+    
+    ### STEP 4: THE IDEAS
+    Generate 5 highly specific ideas based on this analysis. Each idea MUST reference a specific game mechanic, bug, or comment from the data provided.
+    
+    For each idea provide:
+    **Format** (Challenge, Discovery, Fail, Experiment, or Tutorial)
+    **Working Title**
+    **The Hook** (Exact words for the first 3 seconds)
+    **Structure** (Beginning, Middle, Payoff)
+    **Thumbnail Concept**`;
     
     const result = await callAI(prompt, status, true);
-    appendOut('out-ideas', `--- FINAL OUTPUT ---\n${result}`);
+    appendOut('out-ideas', result);
   } catch (e) { 
-    appendOut('out-ideas', `❌ Error: ${e.message}`); 
+    appendOut('out-ideas', `❌ **Error:** ${e.message}`); 
   } finally {
     btn.disabled = false; 
     btn.textContent = isRandom ? '🎲 Surprise Me (Random Game)' : 'Generate 5 Ideas';
@@ -708,21 +717,21 @@ async function runCompetitor() {
   const input = document.getElementById('compInput').value.trim();
   const out = document.getElementById('out-competitors');
   out.classList.add('show');
-  setOut('out-competitors', '');
-  const status = (msg) => appendOut('out-competitors', msg + '\n\n');
+  out.innerHTML = '';
+  const status = (msg) => appendOut('out-competitors', `*${msg}*`);
 
   try {
-    const prompt = `You are a VR YouTube competitor analyst. Analyse: ${input || 'Identify 3-5 relevant VR creators yourself'}.\nFocus on: hooks, titles, thumbnails, editing pace, and what a small creator can learn without copying. Be honest about what you cannot verify.`;
+    const prompt = `You are a VR YouTube competitor analyst. Analyse: ${input || 'Identify 3-5 relevant VR creators yourself'}.\nFocus on: hooks, titles, thumbnails, editing pace, and what a small creator can learn without copying. Be honest about what you cannot verify. Format with clear headings.`;
     const result = await callAI(prompt, status, false);
-    appendOut('out-competitors', `--- COMPETITOR ANALYSIS ---\n${result}`);
-  } catch (e) { appendOut('out-competitors', `❌ Error: ${e.message}`); }
+    appendOut('out-competitors', result);
+  } catch (e) { appendOut('out-competitors', `❌ **Error:** ${e.message}`); }
 }
 
 async function runVideoReviewer() {
   const ctx = document.getElementById('reviewContext').value.trim();
   const out = document.getElementById('out-reviewer');
   out.classList.add('show');
-  out.textContent = `To review actual footage:\n\n1. Open Google AI Studio (aistudio.google.com)\n2. Start a chat with a Gemini Flash model\n3. Upload your video (under 2 GB)\n4. Paste this prompt:\n\n---\n\nYou are a video reviewer. Review this VR gaming footage. Focus on: first 3 seconds (hook), clarity, pacing, audio, captions, payoff, and ending. Give a timestamped checklist of exact edits. Score each area out of 10 and explain why. Do not claim scores predict views.${ctx ? '\n\nContext: ' + ctx : ''}`;
+  out.innerHTML = `To review actual footage:\n\n1. Open Google AI Studio (aistudio.google.com)\n2. Start a chat with a Gemini Flash model\n3. Upload your video (under 2 GB)\n4. Paste this prompt:\n\n---\n\nYou are a video reviewer. Review this VR gaming footage. Focus on: first 3 seconds (hook), clarity, pacing, audio, captions, payoff, and ending. Give a timestamped checklist of exact edits. Score each area out of 10 and explain why.${ctx ? '\n\nContext: ' + ctx : ''}`;
 }
 
 async function runEditingCoach() {
@@ -730,14 +739,14 @@ async function runEditingCoach() {
   if (!input) { toast('Paste review feedback first'); return; }
   const out = document.getElementById('out-editing');
   out.classList.add('show');
-  setOut('out-editing', '');
-  const status = (msg) => appendOut('out-editing', msg + '\n\n');
+  out.innerHTML = '';
+  const status = (msg) => appendOut('out-editing', `*${msg}*`);
 
   try {
-    const prompt = `You are a CapCut mobile editing coach. Based on this review:\n\n${input}\n\nCreate a timestamped editing checklist. For each edit: timestamp, exact CapCut steps, duration, and whether the feature is free. Explain simply.`;
+    const prompt = `You are a CapCut mobile editing coach. Based on this review:\n\n${input}\n\nCreate a timestamped editing checklist. For each edit: timestamp, exact CapCut steps, duration, and whether the feature is free. Format clearly.`;
     const result = await callAI(prompt, status, false);
-    appendOut('out-editing', `--- EDITING PLAN ---\n${result}`);
-  } catch (e) { appendOut('out-editing', `❌ Error: ${e.message}`); }
+    appendOut('out-editing', result);
+  } catch (e) { appendOut('out-editing', `❌ **Error:** ${e.message}`); }
 }
 
 async function runSEO() {
@@ -745,14 +754,14 @@ async function runSEO() {
   if (!input) { toast('Enter a video concept first'); return; }
   const out = document.getElementById('out-seo');
   out.classList.add('show');
-  setOut('out-seo', '');
-  const status = (msg) => appendOut('out-seo', msg + '\n\n');
+  out.innerHTML = '';
+  const status = (msg) => appendOut('out-seo', `*${msg}*`);
 
   try {
-    const prompt = `You are a YouTube SEO expert for VR gaming. Video concept:\n\n${input}\n\nCreate:\n1. 10 title options\n2. Top 3 with reasoning\n3. A full description\n4. 5-8 hashtags\n5. 10-15 tags\n6. A pinned comment\n7. Thumbnail concept.\nAvoid misleading clickbait. All text ready to copy-paste.`;
+    const prompt = `You are a YouTube SEO expert for VR gaming. Video concept:\n\n${input}\n\nCreate:\n1. 10 title options\n2. Top 3 with reasoning\n3. A full description\n4. 5-8 hashtags\n5. 10-15 tags\n6. A pinned comment\n7. Thumbnail concept.\nFormat with clear headings.`;
     const result = await callAI(prompt, status, false);
-    appendOut('out-seo', `--- PUBLISHING PACKAGE ---\n${result}`);
-  } catch (e) { appendOut('out-seo', `❌ Error: ${e.message}`); }
+    appendOut('out-seo', result);
+  } catch (e) { appendOut('out-seo', `❌ **Error:** ${e.message}`); }
 }
 
 async function runAnalytics() {
@@ -760,14 +769,14 @@ async function runAnalytics() {
   const metrics = document.getElementById('analyticsInput').value.trim();
   const out = document.getElementById('out-analytics');
   out.classList.add('show');
-  setOut('out-analytics', '');
-  const status = (msg) => appendOut('out-analytics', msg + '\n\n');
+  out.innerHTML = '';
+  const status = (msg) => appendOut('out-analytics', `*${msg}*`);
 
   try {
-    const prompt = `You are a YouTube channel auditor. Channel: ${url || 'Not provided'}. Metrics:\n\n${metrics || 'No metrics provided.'}\n\nAnalyse what is working, what is failing, and what to test next. Never invent data.`;
+    const prompt = `You are a YouTube channel auditor. Channel: ${url || 'Not provided'}. Metrics:\n\n${metrics || 'No metrics provided.'}\n\nAnalyse what is working, what is failing, and what to test next. Format with clear headings.`;
     const result = await callAI(prompt, status, false);
-    appendOut('out-analytics', `--- AUDIT ---\n${result}`);
-  } catch (e) { appendOut('out-analytics', `❌ Error: ${e.message}`); }
+    appendOut('out-analytics', result);
+  } catch (e) { appendOut('out-analytics', `❌ **Error:** ${e.message}`); }
 }
 
 async function runCommand() {
@@ -782,20 +791,20 @@ async function runCommand() {
 async function runFullWorkflow() {
   const out = document.getElementById('out-dashboard');
   out.classList.add('show');
-  setOut('out-dashboard', '');
-  const status = (msg) => appendOut('out-dashboard', msg + '\n\n');
+  out.innerHTML = '';
+  const status = (msg) => appendOut('out-dashboard', `*${msg}*`);
 
   try {
     const videos = await youtubeSearch('VR gaming', 7, status);
     if (!videos.length) throw new Error('No videos found.');
-    const videoList = videos.map((v, i) => `${i+1}. "${v.title}" by ${v.channel}\n   Outlier Score: ${v.outlierScore}\n   Transcript: ${v.transcript.substring(0, 1500)}...`).join('\n\n');
-    appendOut('out-dashboard', `✅ Found ${videos.length} recent videos and calculated Outlier Scores.\n\n`);
+    const videoList = videos.map((v, i) => `${i+1}. "${v.title}" by ${v.channel}\n   Outlier Score: ${v.outlierScore}\n   Transcript: ${v.transcript.substring(0, 2000)}...`).join('\n\n');
+    appendOut('out-dashboard', `✅ Found ${videos.length} recent videos.\n\n---\n\n`);
     
-    const prompt = `You are a VR YouTube strategist. Here is real data:\n\n${videoList}\n\nProvide a report using this exact structure:\n1. OUTLIER ANALYSIS (Which video broke out and why)\n2. AUDIENCE DEMAND (What the comments are saying)\n3. MARKET GAP (What is missing)\n4. 3 VIDEO IDEAS (With hooks)`;
+    const prompt = `You are a VR YouTube strategist. Here is real data:\n\n${videoList}\n\nProvide a report using this exact structure:\n## 1. OUTLIER ANALYSIS\n## 2. AUDIENCE DEMAND\n## 3. MARKET GAP\n## 4. 3 VIDEO IDEAS`;
     const analysis = await callAI(prompt, status, false);
-    appendOut('out-dashboard', `--- FULL WORKFLOW REPORT ---\n${analysis}`);
+    appendOut('out-dashboard', analysis);
   } catch (e) {
-    appendOut('out-dashboard', `❌ Error: ${e.message}`);
+    appendOut('out-dashboard', `❌ **Error:** ${e.message}`);
   }
 }
 
@@ -853,4 +862,4 @@ function escapeHtml(s) { const d = document.createElement('div'); d.textContent 
 init();
 </script>
 </body>
-</html>
+   </html>
