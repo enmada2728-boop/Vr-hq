@@ -4,350 +4,180 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#050508">
-<title>VR Creator HQ</title>
+<title>VR Creator HQ — Ultimate Strategy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<!-- Markdown Parser for beautiful text -->
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  :root {
-    --bg: #050508; --surface: rgba(20, 20, 28, 0.65); --surface-hover: rgba(30, 30, 42, 0.8);
-    --border: rgba(255, 255, 255, 0.08); --border-bright: rgba(255, 255, 255, 0.15);
-    --text: #f8fafc; --muted: #94a3b8; --accent: #8b5cf6; --accent-glow: rgba(139, 92, 246, 0.4);
-    --accent-gradient: linear-gradient(135deg, #8b5cf6, #3b82f6); --live: #10b981; --warn: #f59e0b; --danger: #ef4444;
+  :root { 
+    --bg: #050508; --surface: rgba(20, 20, 28, 0.65); --border: rgba(255, 255, 255, 0.08); 
+    --text: #f8fafc; --muted: #94a3b8; --accent: #8b5cf6; --accent-glow: rgba(139, 92, 246, 0.4); 
+    --grad: linear-gradient(135deg, #8b5cf6, #3b82f6); 
   }
-  body {
-    font-family: 'Inter', -apple-system, sans-serif; background-color: var(--bg);
+  body { 
+    font-family: 'Inter', sans-serif; background-color: var(--bg); 
     background-image: radial-gradient(circle at 15% 10%, rgba(139, 92, 246, 0.12) 0%, transparent 40%), radial-gradient(circle at 85% 90%, rgba(59, 130, 246, 0.1) 0%, transparent 40%);
-    background-attachment: fixed; color: var(--text); min-height: 100vh; padding-bottom: 100px;
-    font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+    background-attachment: fixed; color: var(--text); min-height: 100vh; padding-bottom: 100px; 
+    font-size: 15px; line-height: 1.6; 
   }
-  header {
-    position: sticky; top: 0; z-index: 100; background: rgba(5, 5, 8, 0.75);
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
-    padding: 18px 20px; display: flex; align-items: center; justify-content: space-between;
+  header { 
+    position: sticky; top: 0; z-index: 100; background: rgba(5, 5, 8, 0.75); 
+    backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); 
+    padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; 
   }
-  header h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
-  header h1 span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  .badge { font-size: 11px; font-weight: 700; color: #000; background: var(--live); padding: 4px 10px; border-radius: 20px; display: flex; align-items: center; gap: 6px; letter-spacing: 0.5px; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); animation: pulse 2s infinite; }
-  @keyframes pulse { 0% { box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); } 50% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.7); } 100% { box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); } }
-  main { padding: 20px; max-width: 720px; margin: 0 auto; }
-  .section { display: none; }
-  .section.active { display: block; animation: fadeUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-  .card { background: var(--surface); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: 24px; padding: 22px; margin-bottom: 18px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); transition: border-color 0.3s; }
-  .card:focus-within { border-color: var(--border-bright); }
-  .card h2 { font-size: 17px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.3px; }
-  .card p { color: var(--muted); font-size: 13.5px; margin-bottom: 16px; line-height: 1.5; }
-  .label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; }
-  button { background: var(--accent-gradient); color: #fff; border: none; border-radius: 14px; padding: 15px 20px; font-size: 15px; font-weight: 600; width: 100%; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 4px 15px var(--accent-glow); font-family: inherit; letter-spacing: 0.3px; }
-  button:active { transform: scale(0.97); opacity: 0.9; box-shadow: 0 2px 8px var(--accent-glow); }
-  button:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; transform: none; }
-  button.secondary { background: var(--surface-hover); color: var(--text); border: 1px solid var(--border); box-shadow: none; }
-  button.secondary:active { background: var(--border); }
-  button.danger { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); box-shadow: none; }
-  button.danger:active { background: rgba(239, 68, 68, 0.25); }
-  button.small { width: auto; padding: 10px 16px; font-size: 13px; border-radius: 10px; }
-  textarea, input[type="text"], input[type="password"], select { width: 100%; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; color: var(--text); font-size: 15px; font-family: inherit; margin-bottom: 14px; transition: all 0.2s; outline: none; }
-  textarea { min-height: 100px; resize: vertical; }
-  textarea:focus, input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15); background: rgba(0, 0, 0, 0.5); }
+  header h1 { font-size: 20px; font-weight: 800; }
+  header h1 span { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .badge { font-size: 11px; font-weight: 700; color: #000; background: #10b981; padding: 4px 10px; border-radius: 20px; }
   
-  /* BEAUTIFUL OUTPUT STYLING */
+  main { padding: 20px; max-width: 720px; margin: 0 auto; }
+  .section { display: none; } .section.active { display: block; animation: fadeUp 0.3s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  
+  .card { background: var(--surface); backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: 24px; padding: 22px; margin-bottom: 18px; }
+  .card h2 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .card p { color: var(--muted); font-size: 13.5px; margin-bottom: 16px; }
+  
+  .label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; }
+  
+  button { 
+    background: var(--grad); color: #fff; border: none; border-radius: 14px; padding: 15px 20px; 
+    font-size: 15px; font-weight: 600; width: 100%; cursor: pointer; 
+    box-shadow: 0 4px 15px var(--accent-glow); margin-bottom: 8px; transition: all 0.2s;
+  }
+  button:active { transform: scale(0.97); opacity: 0.9; }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  
+  input, textarea, select { 
+    width: 100%; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border); 
+    border-radius: 14px; padding: 14px 16px; color: var(--text); font-size: 15px; 
+    font-family: inherit; margin-bottom: 14px; outline: none; transition: border 0.2s;
+  }
+  textarea { min-height: 100px; resize: vertical; }
+  input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+  
+  /* BEAUTIFUL MARKDOWN OUTPUT */
   .output { 
-    background: #0a0a0f; border: 1px solid var(--border); border-radius: 16px; padding: 20px; 
-    font-size: 14.5px; line-height: 1.7; max-height: 600px; overflow-y: auto; margin-top: 12px; 
-    display: none; color: #e2e8f0; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); 
+    background: #0a0a0f; border: 1px solid var(--border); border-radius: 16px; 
+    padding: 20px; font-size: 14.5px; line-height: 1.7; max-height: 600px; 
+    overflow-y: auto; margin-top: 12px; display: none; color: #e2e8f0; 
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); 
   }
   .output.show { display: block; animation: fadeUp 0.3s ease; }
-  .output::-webkit-scrollbar { width: 6px; }
-  .output::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 10px; }
-  
-  /* Markdown CSS Overrides */
   .output h1, .output h2, .output h3 { color: #fff; margin-top: 20px; margin-bottom: 10px; font-weight: 700; line-height: 1.3; }
   .output h1 { font-size: 20px; border-bottom: 1px solid #27272a; padding-bottom: 8px; }
   .output h2 { font-size: 18px; }
   .output h3 { font-size: 16px; color: #a78bfa; }
-  .output p { margin-bottom: 14px; }
-  .output strong { color: #fff; font-weight: 600; }
   .output ul, .output ol { margin-left: 20px; margin-bottom: 16px; }
   .output li { margin-bottom: 8px; }
-  .output code { background: rgba(139, 92, 246, 0.15); color: #c4b5fd; padding: 2px 6px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  .output strong { color: #fff; }
   .output blockquote { border-left: 3px solid var(--accent); margin: 14px 0; padding-left: 14px; color: #94a3b8; font-style: italic; }
+  .output hr { border: none; border-top: 1px solid #27272a; margin: 20px 0; }
 
-  .tag { display: inline-flex; align-items: center; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 8px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; gap: 4px; }
-  .tag.live { background: rgba(16, 185, 129, 0.1); color: var(--live); border: 1px solid rgba(16, 185, 129, 0.2); }
-  .tag.manual { background: rgba(245, 158, 11, 0.1); color: var(--warn); border: 1px solid rgba(245, 158, 11, 0.2); }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .stat { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 16px; padding: 16px; text-align: center; }
-  .stat .num { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 4px; }
-  .stat .desc { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-  nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; background: rgba(10, 10, 15, 0.85); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-top: 1px solid var(--border); display: flex; overflow-x: auto; padding: 8px 12px 12px; gap: 4px; scrollbar-width: none; border-radius: 24px 24px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.3); }
+  nav { 
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; 
+    background: rgba(10, 10, 15, 0.85); backdrop-filter: blur(24px); 
+    border-top: 1px solid var(--border); display: flex; overflow-x: auto; 
+    padding: 8px 12px; gap: 4px; scrollbar-width: none; border-radius: 24px 24px 0 0; 
+  }
   nav::-webkit-scrollbar { display: none; }
-  nav button { background: transparent; color: var(--muted); font-size: 11px; font-weight: 600; padding: 10px 14px; border-radius: 12px; width: auto; min-width: 70px; margin: 0; flex-shrink: 0; text-align: center; line-height: 1.3; box-shadow: none; transition: all 0.2s; }
-  nav button:active { transform: scale(0.95); background: rgba(255,255,255,0.05); }
+  nav button { 
+    background: transparent; color: var(--muted); font-size: 11px; font-weight: 600; 
+    padding: 10px 14px; border-radius: 12px; width: auto; min-width: 70px; 
+    margin: 0; flex-shrink: 0; box-shadow: none; transition: all 0.2s;
+  }
   nav button.active { color: #fff; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); }
-  .notice { background: rgba(245, 158, 11, 0.08); border-left: 3px solid var(--warn); border-radius: 8px; padding: 12px 16px; font-size: 12.5px; color: #fcd34d; margin-bottom: 16px; line-height: 1.5; }
-  .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px); background: #fff; color: #000; padding: 12px 24px; border-radius: 30px; font-size: 13px; font-weight: 700; z-index: 200; opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .saved-item { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-  .saved-item .title { font-size: 14px; font-weight: 600; flex: 1; color: #fff; }
-  .saved-item .date { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .saved-item button { width: auto; padding: 8px 12px; font-size: 12px; margin: 0; border-radius: 8px; }
-  hr { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
-  .muted { color: var(--muted); font-size: 12px; }
 </style>
 </head>
 <body>
 
 <header>
   <h1>VR Creator <span>HQ</span></h1>
-  <span class="badge">● ZERO-GUESS</span>
+  <div class="badge">ULTIMATE</div>
 </header>
 
 <main>
 
-<div id="s-dashboard" class="section active">
+<!-- IDEAS & HOOKS -->
+<div id="s-ideas" class="section active">
   <div class="card">
-    <h2>Command Centre</h2>
-    <p>Type a request. The system now forces AI to analyze real transcripts and comments.</p>
-    <textarea id="commandBox" placeholder='e.g. "Find the best VR gaming Shorts opportunities today"'></textarea>
-    <button onclick="runCommand()">Run Command</button>
-    <button class="secondary" onclick="runFullWorkflow()" style="margin-top: 8px;">▶ Run Full Workflow</button>
-  </div>
-
-  <div class="card">
-    <h2>System Status</h2>
-    <div class="grid">
-      <div class="stat"><div class="num" id="statReports">0</div><div class="desc">Saved Reports</div></div>
-      <div class="stat"><div class="num" id="statSearches">0</div><div class="desc">Live Searches</div></div>
-    </div>
-    <div class="notice" style="margin-top:16px;margin-bottom:0">
-      <strong>Zero-Assumption Protocol:</strong> AI is forbidden from using its internal memory. It must prove what the game is using the live YouTube data.
-    </div>
-  </div>
-</div>
-
-<div id="s-trends" class="section">
-  <div class="card">
-    <h2>YouTube VR Trend Hunter</h2>
-    <span class="tag live">● DATA MINING</span>
-    <p>Fetches recent videos, calculates their views vs channel subscribers, and reads transcripts.</p>
-    <label class="label">Search Query</label>
-    <input type="text" id="trendQuery" value="VR gaming" placeholder="VR gaming">
-    <label class="label">Days to look back</label>
-    <input type="text" id="trendDays" value="7" placeholder="7">
-    <button onclick="runTrendHunter()" id="btnTrend">Search Live Trends</button>
-    <div class="output" id="out-trends"></div>
-    <button class="secondary small" onclick="copyOutput('out-trends')" style="margin-top:12px">Copy Results</button>
-  </div>
-</div>
-
-<div id="s-ideas" class="section">
-  <div class="card">
-    <h2>Viral VR Video Ideas</h2>
-    <span class="tag live">● ZERO GUESSING</span>
-    <p>Uses strict data constraints. It will first prove what the game is using the data, then give ideas.</p>
-    
-    <label class="label">Game or Context</label>
-    <textarea id="ideaInput" placeholder="Enter a game (e.g. Blade & Sorcery), or leave blank and hit randomise..." style="min-height:80px"></textarea>
-    
-    <button onclick="runIdeaResearcher(false)" id="btnIdeas">Generate 5 Ideas</button>
-    <button class="secondary" onclick="runIdeaResearcher(true)" style="margin-top: 8px;">🎲 Surprise Me (Random Game)</button>
-    
+    <h2>💡 Ideas & Hooks Generator</h2>
+    <p>Scrapes live YouTube comments and uses AI to generate 5 highly clickable ideas, complete with the exact 3-second hook and a 3-act script.</p>
+    <label class="label">Enter Game or Context</label>
+    <input type="text" id="ideaGame" placeholder="e.g. Blade & Sorcery, Gorilla Tag...">
+    <button onclick="runIdeas()" id="btnIdeas">Generate Ideas & Scripts</button>
     <div class="output" id="out-ideas"></div>
-    <button class="secondary small" onclick="copyOutput('out-ideas')" style="margin-top:12px">Copy Ideas</button>
   </div>
 </div>
 
-<div id="s-competitors" class="section">
+<!-- SHORTS FINDER -->
+<div id="s-shorts" class="section">
   <div class="card">
-    <h2>VR Competitor Analyst</h2>
-    <span class="tag live">● AI POWERED</span>
-    <p>Analyses competitor hooks, titles, and thumbnails using real audience feedback.</p>
-    <label class="label">Creator Names or Channel URLs</label>
-    <textarea id="compInput" placeholder="e.g. @ExampleVR, @QuestGamer..."></textarea>
-    <button onclick="runCompetitor()">Analyse Competitors</button>
-    <div class="output" id="out-competitors"></div>
-    <button class="secondary small" onclick="copyOutput('out-competitors')" style="margin-top:12px">Copy Result</button>
+    <h2>✂️ Shorts Finder</h2>
+    <p>Paste your raw video transcript. The AI finds the exact timestamps of the funniest/most intense moments.</p>
+    <label class="label">Paste Transcript (with timestamps if possible)</label>
+    <textarea id="shortsTranscript" placeholder="e.g. 00:00 I'm playing Blade and Sorcery... 04:20 OH MY GOD DID YOU SEE THAT?..." style="min-height:150px"></textarea>
+    <button onclick="runShortsFinder()" id="btnShorts">Find Shorts Moments</button>
+    <div class="output" id="out-shorts"></div>
   </div>
 </div>
 
-<div id="s-reviewer" class="section">
+<!-- TITLE & THUMBNAIL -->
+<div id="s-title" class="section">
   <div class="card">
-    <h2>Real Video Reviewer</h2>
-    <span class="tag manual">MANUAL UPLOAD</span>
-    <p><strong>To review footage:</strong> Upload your clip to Google AI Studio / Gemini (free, 2 GB limit) and paste the prompt below.</p>
-    <label class="label">Describe the Video (optional)</label>
-    <textarea id="reviewContext" placeholder="e.g. 8-minute Blade & Sorcery challenge video..."></textarea>
-    <button onclick="runVideoReviewer()">Generate Review Prompt</button>
-    <div class="output" id="out-reviewer"></div>
-    <button class="secondary small" onclick="copyOutput('out-reviewer')" style="margin-top:12px">Copy Prompt</button>
+    <h2>🏆 Packaging Tester</h2>
+    <p>Generates 10 titles, scores them out of 100 for CTR, and writes the exact prompt for your thumbnail.</p>
+    <label class="label">Video Concept</label>
+    <textarea id="titleConcept" placeholder="e.g. I beat a Gorilla Tag tournament while blindfolded..." style="min-height:80px"></textarea>
+    <button onclick="runTitleTester()" id="btnTitle">Test Packaging</button>
+    <div class="output" id="out-title"></div>
   </div>
 </div>
 
-<div id="s-editing" class="section">
+<!-- COMMUNITY -->
+<div id="s-community" class="section">
   <div class="card">
-    <h2>Mobile Editing Coach</h2>
-    <span class="tag live">● AI POWERED</span>
-    <p>Paste review feedback. The AI creates a timestamped CapCut editing checklist.</p>
-    <label class="label">Paste Review Feedback</label>
-    <textarea id="editInput" placeholder="Paste the Gemini review or your notes..."></textarea>
-    <button onclick="runEditingCoach()">Generate Editing Plan</button>
-    <div class="output" id="out-editing"></div>
-    <button class="secondary small" onclick="copyOutput('out-editing')" style="margin-top:12px">Copy Plan</button>
+    <h2>🧠 Community Brainstormer</h2>
+    <p>Reads recent YouTube comments for a game to find what players are complaining about, then gives you video ideas to solve their problems.</p>
+    <label class="label">Game Name</label>
+    <input type="text" id="commGame" placeholder="e.g. Bonelab">
+    <button onclick="runCommunityBrainstorm()" id="btnComm">Analyze Community</button>
+    <div class="output" id="out-community"></div>
   </div>
 </div>
 
-<div id="s-seo" class="section">
-  <div class="card">
-    <h2>Titles, Descriptions & SEO</h2>
-    <span class="tag live">● AI POWERED</span>
-    <p>Generates titles, description, hashtags, tags, and a thumbnail concept.</p>
-    <label class="label">Video Concept or Description</label>
-    <textarea id="seoInput" placeholder="e.g. I made a Blade & Sorcery video where I can only use a frying pan..." style="min-height:120px"></textarea>
-    <button onclick="runSEO()">Generate Publishing Package</button>
-    <div class="output" id="out-seo"></div>
-    <button class="secondary small" onclick="copyOutput('out-seo')" style="margin-top:12px">Copy Package</button>
-  </div>
-</div>
-
-<div id="s-analytics" class="section">
-  <div class="card">
-    <h2>Channel Auditor</h2>
-    <span class="tag manual">MANUAL METRICS</span>
-    <p>Enter your YouTube Studio metrics manually for AI analysis.</p>
-    <label class="label">Channel URL or Handle</label>
-    <input type="text" id="channelUrl" placeholder="e.g. youtube.com/@YourChannel">
-    <label class="label">Your Metrics</label>
-    <textarea id="analyticsInput" placeholder="e.g. Last 28 days: 12,400 views, 4.1% CTR, 38% average retention..."></textarea>
-    <button onclick="runAnalytics()">Generate Channel Audit</button>
-    <div class="output" id="out-analytics"></div>
-    <button class="secondary small" onclick="copyOutput('out-analytics')" style="margin-top:12px">Copy Audit</button>
-  </div>
-</div>
-
-<div id="s-saved" class="section">
-  <div class="card">
-    <h2>Saved Reports</h2>
-    <p>Reports are stored in your browser's local storage. They never leave your phone.</p>
-    <label class="label">Report Name</label>
-    <input type="text" id="saveName" placeholder="e.g. Trends 29 Oct">
-    <label class="label">Content</label>
-    <textarea id="saveContent" placeholder="Paste the AI response you want to keep..."></textarea>
-    <button onclick="saveReport()">Save Report</button>
-    <hr>
-    <div id="savedList"></div>
-    <button class="danger small" onclick="clearAllReports()" style="margin-top:16px">Delete All Saved Reports</button>
-  </div>
-</div>
-
+<!-- SETTINGS -->
 <div id="s-settings" class="section">
   <div class="card">
-    <h2>Settings & API Keys</h2>
-    <p>Keys are stored only in this browser on this phone.</p>
-    
-    <label class="label">Preferred AI Engine</label>
-    <select id="aiEngineSelect">
-      <option value="auto">Auto-Route (Best Quality)</option>
-      <option value="gemini">Force Gemini</option>
-      <option value="groq">Force Groq (Ultra Fast)</option>
-      <option value="openrouter">Force OpenRouter</option>
-    </select>
-
-    <label class="label">YouTube Data API Key</label>
-    <input type="password" id="ytKeyInput" placeholder="Paste your YouTube API Key">
-    
+    <h2>⚙️ API Settings</h2>
+    <p>Your keys are saved locally on your phone.</p>
     <label class="label">Gemini API Key</label>
-    <input type="password" id="geminiKeyInput" placeholder="Paste your Gemini API Key">
-    
-    <label class="label">Groq API Key</label>
-    <input type="password" id="groqKeyInput" placeholder="Paste your Groq API Key">
-    
-    <label class="label">OpenRouter API Key</label>
-    <input type="password" id="openrouterKeyInput" placeholder="Paste your OpenRouter API Key">
-    
-    <label class="label">Transcript API Key (YouTube-Transcript.ai)</label>
-    <input type="password" id="transcriptKeyInput" placeholder="Paste your Transcript API Key">
-    
-    <button onclick="saveKeys()">Save All Keys</button>
+    <input type="password" id="geminiKey" placeholder="Paste Gemini API Key">
+    <label class="label">YouTube Data API Key</label>
+    <input type="password" id="ytKey" placeholder="Paste YouTube API Key">
+    <button onclick="saveKeys()" class="secondary" style="background:var(--accent); color:white;">Save Keys</button>
   </div>
 </div>
 
 </main>
 
 <nav>
-  <button class="active" onclick="show('dashboard', this)">Dashboard</button>
-  <button onclick="show('trends', this)">Trends</button>
-  <button onclick="show('ideas', this)">Ideas</button>
-  <button onclick="show('competitors', this)">Competitors</button>
-  <button onclick="show('reviewer', this)">Reviewer</button>
-  <button onclick="show('editing', this)">Editing</button>
-  <button onclick="show('seo', this)">SEO</button>
-  <button onclick="show('analytics', this)">Analytics</button>
-  <button onclick="show('saved', this)">Saved</button>
+  <button class="active" onclick="show('ideas', this)">Ideas</button>
+  <button onclick="show('shorts', this)">Shorts</button>
+  <button onclick="show('title', this)">Packaging</button>
+  <button onclick="show('community', this)">Community</button>
   <button onclick="show('settings', this)">Settings</button>
 </nav>
 
-<div class="toast" id="toast">Copied</div>
-
 <script>
-let YT_KEY = '';
-let GEMINI_KEY = '';
-let GROQ_KEY = '';
-let OPENROUTER_KEY = '';
-let TRANSCRIPT_KEY = '';
-let PREFERRED_AI = 'auto';
-let searchCount = 0;
+let GEMINI_KEY = localStorage.getItem('vrhq_gemini_key') || '';
+let YT_KEY = localStorage.getItem('vrhq_yt_key') || '';
+const GEMINI_MODEL = 'gemini-2.5-flash';
 
-const GEMINI_MODELS = ['gemini-2.5-flash', 'gemini-3.8-flash', 'gemini-3.5-flash-lite'];
-let workingModel = localStorage.getItem('vrhq_working_model') || '';
-
-const POPULAR_VR_GAMES = ["Blade & Sorcery", "Gorilla Tag", "Bonelab", "Beat Saber", "Walkabout Mini Golf", "Contractors Showdown", "Asgard's Wrath 2", "Assassin's Creed Nexus", "The Walking Dead: Saints & Sinners", "Superhot VR"];
-
-function init() {
-  YT_KEY = localStorage.getItem('vrhq_yt_key') || '';
-  GEMINI_KEY = localStorage.getItem('vrhq_gemini_key') || '';
-  GROQ_KEY = localStorage.getItem('vrhq_groq_key') || '';
-  OPENROUTER_KEY = localStorage.getItem('vrhq_openrouter_key') || '';
-  TRANSCRIPT_KEY = localStorage.getItem('vrhq_transcript_key') || '';
-  PREFERRED_AI = localStorage.getItem('vrhq_preferred_ai') || 'auto';
-  searchCount = parseInt(localStorage.getItem('vrhq_search_count') || '0');
-  
-  updateStats();
-  renderSaved();
-  
-  document.getElementById('ytKeyInput').value = YT_KEY ? '••••••••' : '';
-  document.getElementById('geminiKeyInput').value = GEMINI_KEY ? '••••••••' : '';
-  document.getElementById('groqKeyInput').value = GROQ_KEY ? '••••••••' : '';
-  document.getElementById('openrouterKeyInput').value = OPENROUTER_KEY ? '••••••••' : '';
-  document.getElementById('transcriptKeyInput').value = TRANSCRIPT_KEY ? '••••••••' : '';
-  document.getElementById('aiEngineSelect').value = PREFERRED_AI;
-}
-
-function saveKeys() {
-  const yt = document.getElementById('ytKeyInput').value.trim();
-  const gem = document.getElementById('geminiKeyInput').value.trim();
-  const groq = document.getElementById('groqKeyInput').value.trim();
-  const open = document.getElementById('openrouterKeyInput').value.trim();
-  const tr = document.getElementById('transcriptKeyInput').value.trim();
-  const ai = document.getElementById('aiEngineSelect').value;
-  
-  if (yt && yt !== '••••••••') { YT_KEY = yt; localStorage.setItem('vrhq_yt_key', yt); }
-  if (gem && gem !== '••••••••') { GEMINI_KEY = gem; localStorage.setItem('vrhq_gemini_key', gem); }
-  if (groq && groq !== '••••••••') { GROQ_KEY = groq; localStorage.setItem('vrhq_groq_key', groq); }
-  if (open && open !== '••••••••') { OPENROUTER_KEY = open; localStorage.setItem('vrhq_openrouter_key', open); }
-  if (tr && tr !== '••••••••') { TRANSCRIPT_KEY = tr; localStorage.setItem('vrhq_transcript_key', tr); }
-  PREFERRED_AI = ai; localStorage.setItem('vrhq_preferred_ai', ai);
-  
-  toast('All keys and preferences saved');
-}
-
-function updateStats() {
-  document.getElementById('statReports').textContent = getReports().length;
-  document.getElementById('statSearches').textContent = searchCount;
-}
+// Init UI
+if (GEMINI_KEY) document.getElementById('geminiKey').value = '••••••••';
+if (YT_KEY) document.getElementById('ytKey').value = '••••••••';
 
 function show(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -355,511 +185,238 @@ function show(id, btn) {
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   window.scrollTo(0, 0);
-  if (id === 'saved') renderSaved();
-  if (id === 'settings') {
-    document.getElementById('ytKeyInput').value = YT_KEY ? '••••••••' : '';
-    document.getElementById('geminiKeyInput').value = GEMINI_KEY ? '••••••••' : '';
-    document.getElementById('groqKeyInput').value = GROQ_KEY ? '••••••••' : '';
-    document.getElementById('openrouterKeyInput').value = OPENROUTER_KEY ? '••••••••' : '';
-    document.getElementById('transcriptKeyInput').value = TRANSCRIPT_KEY ? '••••••••' : '';
-    document.getElementById('aiEngineSelect').value = PREFERRED_AI;
-  }
 }
 
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
+function saveKeys() {
+  const g = document.getElementById('geminiKey').value;
+  const y = document.getElementById('ytKey').value;
+  if (g && g !== '••••••••') { GEMINI_KEY = g; localStorage.setItem('vrhq_gemini_key', g); }
+  if (y && y !== '••••••••') { YT_KEY = y; localStorage.setItem('vrhq_yt_key', y); }
+  alert("Keys saved successfully!");
 }
 
-function setOut(id, text) {
+// --- UI HELPERS ---
+function renderOutput(id, text) {
   const el = document.getElementById(id);
-  el.innerHTML = marked.parse(text); 
+  el.innerHTML = marked.parse(text);
   el.classList.add('show');
 }
 
-function appendOut(id, text) {
+function showLoading(id, msg) {
   const el = document.getElementById(id);
-  el.innerHTML += marked.parse(text + "\n\n");
+  el.innerHTML = `<div style="color:var(--muted); font-family:monospace; display:flex; align-items:center; gap:10px;"><span class="spinner"></span> ${msg}...</div>`;
+  el.classList.add('show');
 }
 
-function copyOutput(id) {
-  const text = document.getElementById(id).innerText;
-  if (!text) { toast('Nothing to copy yet'); return; }
-  navigator.clipboard.writeText(text).then(() => toast('Copied to clipboard')).catch(() => {
-    const ta = document.createElement('textarea');
-    ta.value = text; document.body.appendChild(ta); ta.select();
-    document.execCommand('copy'); ta.remove(); toast('Copied to clipboard');
+function setButtonState(id, isLoading, text) {
+  const btn = document.getElementById(id);
+  btn.disabled = isLoading;
+  btn.innerText = isLoading ? 'Working...' : text;
+}
+
+// --- AI CORE ---
+async function callGemini(prompt) {
+  if (!GEMINI_KEY) throw new Error("Please add your Gemini API key in Settings.");
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`;
+  
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 45000); // 45s timeout
+  
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: { temperature: 0.8, maxOutputTokens: 3000 }
+    }),
+    signal: controller.signal
   });
+  
+  clearTimeout(timeoutId);
+  
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error?.message || "Gemini API failed. Check your key.");
+  }
+  
+  const data = await res.json();
+  return data.candidates[0].content.parts[0].text;
 }
 
-async function fetchTranscript(videoId, statusCallback) {
-  if (!TRANSCRIPT_KEY) return "Transcript API key missing.";
+// --- FEATURE 1: IDEAS & HOOKS ---
+async function runIdeas() {
+  const game = document.getElementById('ideaGame').value;
+  if (!game) return alert("Enter a game name!");
+  if (!YT_KEY) return alert("Add YouTube API key in Settings to scrape context.");
+  
+  setButtonState('btnIdeas', true, 'Generate Ideas & Scripts');
+  showLoading('out-ideas', `Searching YouTube for ${game}`);
+  
   try {
-    statusCallback(`📖 Reading transcript...`);
-    const url = `https://youtube-transcript.ai/transcript/${videoId}.txt?key=${TRANSCRIPT_KEY}`;
-    const res = await fetch(url);
-    if (!res.ok) return "Transcript unavailable.";
-    const text = await res.text();
-    return text;
-  } catch (e) {
-    return "Transcript fetch failed.";
-  }
-}
-
-async function youtubeSearch(query, days, statusCallback) {
-  if (!YT_KEY) throw new Error('YouTube API Key missing. Go to Settings and add it.');
-  const publishedAfter = new Date(Date.now() - days * 86400000).toISOString();
-  const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&order=viewCount&publishedAfter=${publishedAfter}&maxResults=4&key=${YT_KEY}`;
-  
-  statusCallback(`⏳ Searching YouTube for the most viewed "${query}" videos...`);
-  const searchRes = await fetch(searchUrl);
-  if (!searchRes.ok) {
-    const err = await searchRes.json().catch(() => ({}));
-    throw new Error(err.error?.message || `YouTube API error: ${searchRes.status}`);
-  }
-  const searchData = await searchRes.json();
-  if (!searchData.items || searchData.items.length === 0) return [];
-
-  const videoIds = searchData.items.map(item => item.id.videoId).join(',');
-  const statsUrl = `https://www.googleapis.com/youtube/v3/videos?part=statistics,snippet&id=${videoIds}&key=${YT_KEY}`;
-  
-  statusCallback("⏳ Fetching view counts and channel sizes...");
-  const statsRes = await fetch(statsUrl);
-  const statsData = await statsRes.json();
-  
-  const statsMap = {};
-  const channelIds = [];
-  if (statsData.items) {
-    statsData.items.forEach(item => { 
-      statsMap[item.id] = item.statistics; 
-      channelIds.push(item.snippet.channelId);
-    });
-  }
-
-  const uniqueChannelIds = [...new Set(channelIds)].join(',');
-  const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${uniqueChannelIds}&key=${YT_KEY}`;
-  const channelRes = await fetch(channelUrl);
-  const channelData = await channelRes.json();
-  
-  const channelSubs = {};
-  if (channelData.items) {
-    channelData.items.forEach(item => {
-      channelSubs[item.id] = parseInt(item.statistics.subscriberCount) || 0;
-    });
-  }
-
-  const detailedVideos = [];
-
-  for (const item of searchData.items) {
-    const vid = item.id.videoId;
-    const stats = statsMap[vid] || {};
-    const channelId = item.snippet.channelId;
-    const subs = channelSubs[channelId] || 0;
-    const views = parseInt(stats.viewCount) || 0;
-    
-    let outlierScore = "N/A";
-    if (subs > 0) {
-      const ratio = (views / subs).toFixed(2);
-      outlierScore = `${ratio}x (${views.toLocaleString()} views / ${subs.toLocaleString()} subs)`;
-    }
-
-    statusCallback(`🔎 Reading audience comments...`);
-    const commentUrl = `https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${vid}&maxResults=5&order=relevance&key=${YT_KEY}`;
-    
     let comments = [];
-    try {
-      const cRes = await fetch(commentUrl);
-      if (cRes.ok) {
-        const cData = await cRes.json();
-        if (cData.items) {
-          comments = cData.items.map(c => c.snippet.topLevelComment.snippet.textDisplay);
+    // Scrape YouTube Comments
+    const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(game + ' VR')}&type=video&order=relevance&maxResults=3&key=${YT_KEY}`;
+    const searchRes = await fetch(searchUrl);
+    const searchData = await searchRes.json();
+    
+    if (searchData.items) {
+      for (const item of searchData.items) {
+        const vid = item.id.videoId;
+        const cUrl = `https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${vid}&maxResults=10&order=relevance&key=${YT_KEY}`;
+        const cRes = await fetch(cUrl);
+        if (cRes.ok) {
+          const cData = await cRes.json();
+          if (cData.items) {
+            cData.items.forEach(c => comments.push(c.snippet.topLevelComment.snippet.textDisplay));
+          }
         }
       }
-    } catch (e) { /* Ignore */ }
-
-    let transcript = await fetchTranscript(vid, statusCallback);
-
-    detailedVideos.push({
-      title: item.snippet.title,
-      videoId: vid,
-      channel: item.snippet.channelTitle,
-      published: item.snippet.publishedAt,
-      url: `https://youtube.com/watch?v=${vid}`,
-      views: views.toLocaleString(),
-      likes: stats.likeCount ? parseInt(stats.likeCount).toLocaleString() : 'N/A',
-      comments: comments,
-      transcript: transcript,
-      outlierScore: outlierScore
-    });
-  }
-
-  searchCount++;
-  localStorage.setItem('vrhq_search_count', searchCount);
-  updateStats();
-
-  return detailedVideos;
-}
-
-async function callGemini(prompt, isCreative) {
-  if (!GEMINI_KEY) throw new Error('Gemini Key missing');
-  const modelsToTry = workingModel && GEMINI_MODELS.includes(workingModel)
-    ? [workingModel, ...GEMINI_MODELS.filter(m => m !== workingModel)]
-    : GEMINI_MODELS;
-
-  for (const model of modelsToTry) {
-    try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_KEY}`;
-      const body = {
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { temperature: isCreative ? 0.7 : 0.1, maxOutputTokens: 2500 }
-      };
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000);
-      let res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: controller.signal });
-      clearTimeout(timeoutId);
-      if (!res.ok) continue;
-      const data = await res.json();
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (text) {
-        workingModel = model;
-        localStorage.setItem('vrhq_working_model', model);
-        return text;
-      }
-    } catch (e) { /* Continue */ }
-  }
-  throw new Error('All Gemini models failed');
-}
-
-async function callGroq(prompt, isCreative) {
-  if (!GROQ_KEY) throw new Error('Groq Key missing');
-  const url = "https://api.groq.com/openai/v1/chat/completions";
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
-    body: JSON.stringify({
-      model: "llama-3.3-70b-versatile",
-      messages: [{ role: "user", content: prompt }],
-      temperature: isCreative ? 0.7 : 0.1
-    })
-  });
-  if (!res.ok) throw new Error('Groq API error');
-  const data = await res.json();
-  return data.choices[0].message.content;
-}
-
-async function callOpenRouter(prompt, isCreative) {
-  if (!OPENROUTER_KEY) throw new Error('OpenRouter Key missing');
-  const url = "https://openrouter.ai/api/v1/chat/completions";
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${OPENROUTER_KEY}`, 'HTTP-Referer': 'https://vr-creator-hq.app' },
-    body: JSON.stringify({
-      model: "meta-llama/llama-3.3-70b-instruct:free",
-      messages: [{ role: "user", content: prompt }],
-      temperature: isCreative ? 0.7 : 0.1
-    })
-  });
-  if (!res.ok) throw new Error('OpenRouter API error');
-  const data = await res.json();
-  return data.choices[0].message.content;
-}
-
-async function callAI(prompt, statusCallback, isCreative = false) {
-  let enginesToTry = [];
-  if (PREFERRED_AI === 'auto') enginesToTry = ['gemini', 'groq', 'openrouter'];
-  else enginesToTry = [PREFERRED_AI];
-
-  let lastError = '';
-
-  for (const engine of enginesToTry) {
-    try {
-      statusCallback(`🧠 Asking ${engine.toUpperCase()} to analyze the data...`);
-      let result = '';
-      if (engine === 'gemini') result = await callGemini(prompt, isCreative);
-      if (engine === 'groq') result = await callGroq(prompt, isCreative);
-      if (engine === 'openrouter') result = await callOpenRouter(prompt, isCreative);
-      if (result) return result;
-    } catch (e) {
-      lastError = e.message;
-    }
-  }
-  throw new Error(`All AI engines failed. Last error: ${lastError}`);
-}
-
-async function runTrendHunter() {
-  const btn = document.getElementById('btnTrend');
-  const out = document.getElementById('out-trends');
-  const query = document.getElementById('trendQuery').value.trim() || 'VR gaming';
-  const days = parseInt(document.getElementById('trendDays').value) || 7;
-
-  if (!YT_KEY) { toast('Add YouTube API Key first'); return; }
-
-  btn.disabled = true; btn.textContent = 'Working...';
-  out.classList.add('show');
-  out.innerHTML = '';
-
-  const status = (msg) => appendOut('out-trends', `*${msg}*`);
-
-  try {
-    const videos = await youtubeSearch(query, days, status);
-    if (videos.length === 0) {
-      appendOut('out-trends', '### No recent videos found.\nTry a broader search.');
-      return;
     }
     
-    const videoList = videos.map((v, i) => {
-      let commentText = v.comments.length > 0 ? `Comments: "${v.comments.slice(0,3).join(' | ')}"` : 'Comments disabled.';
-      let transcriptSnippet = v.transcript.substring(0, 2500); 
-      return `${i+1}. "${v.title}" by ${v.channel}\n   Outlier Score: ${v.outlierScore}\n   Transcript Snippet: "${transcriptSnippet}..."\n   ${commentText}`;
-    }).join('\n\n');
+    showLoading('out-ideas', 'Generating ideas, hooks, and scripts...');
     
-    appendOut('out-trends', `✅ Found ${videos.length} videos and read transcripts.\n\n---\n\n`);
+    const prompt = `You are a master YouTube strategist for VR gaming.
+    Game/Context: "${game}"
+    Recent YouTube Comments: "${comments.slice(0, 10).join(' | ')}"
     
-    const prompt = `You are a ruthless YouTube data analyst for VR gaming.
+    Generate 5 unique video ideas. For EACH idea, provide exactly this structure:
     
-    I have provided real data. DO NOT GUESS. If you make a claim, you MUST quote the provided transcript or comments to prove it.
+    ## Idea [Number]: [Title]
+    **The Concept:** A 1-sentence summary of what the video is.
+    **The 3-Second Hook:** The EXACT words you should say in the first 3 seconds to stop them scrolling.
+    **The Script Outline:**
+    - *Beginning:* How to set up the video.
+    - *Middle:* The main conflict, funny moment, or gameplay loop.
+    - *Payoff:* How to end it with a bang.
+    **Thumbnail Text:** 1-3 words for the thumbnail.
     
-    DATA:
-    ${videoList}
+    Make sure the hooks are aggressive and highly clickable.`;
     
-    ## 1. THE OUTLIER
-    Which video is the biggest outlier (highest views compared to channel size)? Why did it work? Quote the transcript.
+    const result = await callGemini(prompt);
+    renderOutput('out-ideas', result);
     
-    ## 2. AUDIENCE PSYCHOLOGY
-    What are viewers actually asking for? Quote at least two specific comments.
-    
-    ## 3. THE MARKET GAP
-    Based on the data, what is a specific video idea a small creator could make that fills a gap?
-    
-    ## 4. ACTIONABLE IDEA
-    Give one highly specific video idea with a title and hook.`;
-    
-    const analysis = await callAI(prompt, status, false);
-    appendOut('out-trends', analysis);
-  } catch (e) {
-    appendOut('out-trends', `❌ **Error:** ${e.message}`);
-  } finally {
-    btn.disabled = false; btn.textContent = 'Search Live Trends';
-  }
-}
-
-async function runIdeaResearcher(isRandom) {
-  const btn = isRandom ? event.target : document.getElementById('btnIdeas');
-  const out = document.getElementById('out-ideas');
-  let input = document.getElementById('ideaInput').value.trim();
-  
-  let gameTarget = input;
-  if (isRandom || !input) {
-    const randomGame = POPULAR_VR_GAMES[Math.floor(Math.random() * POPULAR_VR_GAMES.length)];
-    gameTarget = randomGame;
-    document.getElementById('ideaInput').value = `Game: ${randomGame}`;
-  }
-
-  btn.disabled = true; btn.textContent = 'Working...';
-  out.classList.add('show');
-  out.innerHTML = '';
-
-  const status = (msg) => appendOut('out-ideas', `*${msg}*`);
-
-  try {
-    const liveVideos = await youtubeSearch(gameTarget, 30, status);
-    
-    let videoContext = "";
-    if (liveVideos.length > 0) {
-      videoContext = liveVideos.map(v => 
-        `Video: "${v.title}" | Outlier Score: ${v.outlierScore}\nTranscript Snippet: "${v.transcript.substring(0, 2000)}..."\nComments: ${v.comments.slice(0, 3).join(' | ')}`
-      ).join('\n\n');
-    }
-
-    appendOut('out-ideas', `✅ Live data gathered.\n\n---\n\n`);
-
-    const prompt = `You are an elite YouTube strategist. 
-    
-    TARGET: ${gameTarget}
-    LIVE DATA: ${videoContext || "No data found for this query."}
-    
-    **ZERO-ASSUMPTION PROTOCOL:** 
-    You are FORBIDDEN from using your internal memory to describe this game. 
-    If the data provided does not match the game title (e.g., if the title implies monkeys but the data is about swords), you MUST point this out.
-    
-    ### STEP 1: WHAT IS THIS GAME?
-    Based ONLY on the transcripts and comments above, describe the actual mechanics, setting, and gameplay of this game. Quote the data to prove it.
-    
-    ### STEP 2: THE PROBLEM
-    What is the biggest complaint or unanswered question in the comments? 
-    
-    ### STEP 3: THE OPPORTUNITY
-    What are the top creators in this data doing? How can we fill the gap they left?
-    
-    ### STEP 4: THE IDEAS
-    Generate 5 highly specific ideas based on this analysis. Each idea MUST reference a specific game mechanic, bug, or comment from the data provided.
-    
-    For each idea provide:
-    **Format** (Challenge, Discovery, Fail, Experiment, or Tutorial)
-    **Working Title**
-    **The Hook** (Exact words for the first 3 seconds)
-    **Structure** (Beginning, Middle, Payoff)
-    **Thumbnail Concept**`;
-    
-    const result = await callAI(prompt, status, true);
-    appendOut('out-ideas', result);
   } catch (e) { 
-    appendOut('out-ideas', `❌ **Error:** ${e.message}`); 
+    renderOutput('out-ideas', `❌ **Error:** ${e.message}`); 
   } finally {
-    btn.disabled = false; 
-    btn.textContent = isRandom ? '🎲 Surprise Me (Random Game)' : 'Generate 5 Ideas';
+    setButtonState('btnIdeas', false, 'Generate Ideas & Scripts');
   }
 }
 
-async function runCompetitor() {
-  const input = document.getElementById('compInput').value.trim();
-  const out = document.getElementById('out-competitors');
-  out.classList.add('show');
-  out.innerHTML = '';
-  const status = (msg) => appendOut('out-competitors', `*${msg}*`);
-
+// --- FEATURE 2: SHORTS FINDER ---
+async function runShortsFinder() {
+  const transcript = document.getElementById('shortsTranscript').value;
+  if (!transcript) return alert("Paste a transcript!");
+  
+  setButtonState('btnShorts', true, 'Find Shorts Moments');
+  showLoading('out-shorts', 'Scanning transcript for viral moments');
+  
   try {
-    const prompt = `You are a VR YouTube competitor analyst. Analyse: ${input || 'Identify 3-5 relevant VR creators yourself'}.\nFocus on: hooks, titles, thumbnails, editing pace, and what a small creator can learn without copying. Be honest about what you cannot verify. Format with clear headings.`;
-    const result = await callAI(prompt, status, false);
-    appendOut('out-competitors', result);
-  } catch (e) { appendOut('out-competitors', `❌ **Error:** ${e.message}`); }
-}
-
-async function runVideoReviewer() {
-  const ctx = document.getElementById('reviewContext').value.trim();
-  const out = document.getElementById('out-reviewer');
-  out.classList.add('show');
-  out.innerHTML = `To review actual footage:\n\n1. Open Google AI Studio (aistudio.google.com)\n2. Start a chat with a Gemini Flash model\n3. Upload your video (under 2 GB)\n4. Paste this prompt:\n\n---\n\nYou are a video reviewer. Review this VR gaming footage. Focus on: first 3 seconds (hook), clarity, pacing, audio, captions, payoff, and ending. Give a timestamped checklist of exact edits. Score each area out of 10 and explain why.${ctx ? '\n\nContext: ' + ctx : ''}`;
-}
-
-async function runEditingCoach() {
-  const input = document.getElementById('editInput').value.trim();
-  if (!input) { toast('Paste review feedback first'); return; }
-  const out = document.getElementById('out-editing');
-  out.classList.add('show');
-  out.innerHTML = '';
-  const status = (msg) => appendOut('out-editing', `*${msg}*`);
-
-  try {
-    const prompt = `You are a CapCut mobile editing coach. Based on this review:\n\n${input}\n\nCreate a timestamped editing checklist. For each edit: timestamp, exact CapCut steps, duration, and whether the feature is free. Format clearly.`;
-    const result = await callAI(prompt, status, false);
-    appendOut('out-editing', result);
-  } catch (e) { appendOut('out-editing', `❌ **Error:** ${e.message}`); }
-}
-
-async function runSEO() {
-  const input = document.getElementById('seoInput').value.trim();
-  if (!input) { toast('Enter a video concept first'); return; }
-  const out = document.getElementById('out-seo');
-  out.classList.add('show');
-  out.innerHTML = '';
-  const status = (msg) => appendOut('out-seo', `*${msg}*`);
-
-  try {
-    const prompt = `You are a YouTube SEO expert for VR gaming. Video concept:\n\n${input}\n\nCreate:\n1. 10 title options\n2. Top 3 with reasoning\n3. A full description\n4. 5-8 hashtags\n5. 10-15 tags\n6. A pinned comment\n7. Thumbnail concept.\nFormat with clear headings.`;
-    const result = await callAI(prompt, status, false);
-    appendOut('out-seo', result);
-  } catch (e) { appendOut('out-seo', `❌ **Error:** ${e.message}`); }
-}
-
-async function runAnalytics() {
-  const url = document.getElementById('channelUrl').value.trim();
-  const metrics = document.getElementById('analyticsInput').value.trim();
-  const out = document.getElementById('out-analytics');
-  out.classList.add('show');
-  out.innerHTML = '';
-  const status = (msg) => appendOut('out-analytics', `*${msg}*`);
-
-  try {
-    const prompt = `You are a YouTube channel auditor. Channel: ${url || 'Not provided'}. Metrics:\n\n${metrics || 'No metrics provided.'}\n\nAnalyse what is working, what is failing, and what to test next. Format with clear headings.`;
-    const result = await callAI(prompt, status, false);
-    appendOut('out-analytics', result);
-  } catch (e) { appendOut('out-analytics', `❌ **Error:** ${e.message}`); }
-}
-
-async function runCommand() {
-  const cmd = document.getElementById('commandBox').value.trim().toLowerCase();
-  if (cmd.includes('trend') || cmd.includes('short')) { show('trends', document.querySelector('nav button:nth-child(2)')); runTrendHunter(); }
-  else if (cmd.includes('idea')) { show('ideas', document.querySelector('nav button:nth-child(3)')); runIdeaResearcher(false); }
-  else if (cmd.includes('competitor')) { show('competitors', document.querySelector('nav button:nth-child(4)')); runCompetitor(); }
-  else if (cmd.includes('seo') || cmd.includes('title')) { show('seo', document.querySelector('nav button:nth-child(7)')); runSEO(); }
-  else { toast('Try keywords: trend, idea, competitor, SEO, title'); }
-}
-
-async function runFullWorkflow() {
-  const out = document.getElementById('out-dashboard');
-  out.classList.add('show');
-  out.innerHTML = '';
-  const status = (msg) => appendOut('out-dashboard', `*${msg}*`);
-
-  try {
-    const videos = await youtubeSearch('VR gaming', 7, status);
-    if (!videos.length) throw new Error('No videos found.');
-    const videoList = videos.map((v, i) => `${i+1}. "${v.title}" by ${v.channel}\n   Outlier Score: ${v.outlierScore}\n   Transcript: ${v.transcript.substring(0, 2000)}...`).join('\n\n');
-    appendOut('out-dashboard', `✅ Found ${videos.length} recent videos.\n\n---\n\n`);
+    const prompt = `You are a Shorts editor. I have a transcript of a long VR gaming video.
+    Identify the top 3 moments that would make great YouTube Shorts.
     
-    const prompt = `You are a VR YouTube strategist. Here is real data:\n\n${videoList}\n\nProvide a report using this exact structure:\n## 1. OUTLIER ANALYSIS\n## 2. AUDIENCE DEMAND\n## 3. MARKET GAP\n## 4. 3 VIDEO IDEAS`;
-    const analysis = await callAI(prompt, status, false);
-    appendOut('out-dashboard', analysis);
-  } catch (e) {
-    appendOut('out-dashboard', `❌ **Error:** ${e.message}`);
+    Transcript:
+    "${transcript.substring(0, 8000)}"
+    
+    For each moment, provide:
+    1. **Timestamp Range:** (e.g., 04:20 - 04:45)
+    2. **The Clip:** What is happening?
+    3. **The Hook:** What text should be on screen in the first 1 second?
+    4. **Why it works:** Why will this get views?`;
+    
+    const result = await callGemini(prompt);
+    renderOutput('out-shorts', result);
+  } catch (e) { 
+    renderOutput('out-shorts', `❌ **Error:** ${e.message}`); 
+  } finally {
+    setButtonState('btnShorts', false, 'Find Shorts Moments');
   }
 }
 
-function getReports() {
-  try { return JSON.parse(localStorage.getItem('vrhq_reports') || '[]'); } catch { return []; }
-}
-function persistReports(r) { localStorage.setItem('vrhq_reports', JSON.stringify(r)); updateStats(); }
-
-function saveReport() {
-  const name = document.getElementById('saveName').value.trim();
-  const content = document.getElementById('saveContent').value.trim();
-  if (!name || !content) { toast('Enter a name and content'); return; }
-  const reports = getReports();
-  reports.unshift({ name, content, date: new Date().toLocaleDateString('en-GB') });
-  persistReports(reports);
-  document.getElementById('saveName').value = '';
-  document.getElementById('saveContent').value = '';
-  renderSaved();
-  toast('Report saved successfully');
-}
-
-function renderSaved() {
-  const list = document.getElementById('savedList');
-  const reports = getReports();
-  if (!reports.length) { list.innerHTML = '<p class="muted">No saved reports yet.</p>'; return; }
-  list.innerHTML = reports.map((r, i) => `
-    <div class="saved-item">
-      <div style="flex:1;min-width:0"><div class="title">${escapeHtml(r.name)}</div><div class="date">${r.date}</div></div>
-      <button class="secondary" onclick="viewReport(${i})">View</button>
-      <button class="danger" onclick="deleteReport(${i})">×</button>
-    </div>`).join('');
-}
-
-function viewReport(i) {
-  const r = getReports()[i];
-  if (!r) return;
-  document.getElementById('saveName').value = r.name;
-  document.getElementById('saveContent').value = r.content;
-  toast('Report loaded');
-}
-
-function deleteReport(i) {
-  const reports = getReports(); reports.splice(i, 1); persistReports(reports); renderSaved();
-}
-
-function clearAllReports() {
-  if (confirm('Delete all saved reports? This cannot be undone.')) {
-    localStorage.removeItem('vrhq_reports');
-    persistReports([]); renderSaved(); toast('All reports deleted');
+// --- FEATURE 3: PACKAGING TESTER ---
+async function runTitleTester() {
+  const concept = document.getElementById('titleConcept').value;
+  if (!concept) return alert("Enter a concept!");
+  
+  setButtonState('btnTitle', true, 'Test Packaging');
+  showLoading('out-title', 'Analyzing psychological triggers');
+  
+  try {
+    const prompt = `You are a YouTube packaging expert. Video Concept: "${concept}".
+    
+    Create the ultimate clickable package:
+    
+    ## 10 High-CTR Titles
+    Generate 10 titles. Score each one out of 100 for Click-Through Rate (CTR). Tell me exactly WHY it got that score.
+    
+    ## 3 Thumbnail Concepts
+    Describe 3 visual ideas. 
+    For each idea, provide a prompt that I can copy and paste into Bing Image Creator (e.g., "A 3D render of a VR headset exploding with fire, neon lights, 8k --ar 16:9").
+    Also tell me what EXACTLY 1-3 words should be written on the thumbnail.`;
+    
+    const result = await callGemini(prompt);
+    renderOutput('out-title', result);
+  } catch (e) { 
+    renderOutput('out-title', `❌ **Error:** ${e.message}`); 
+  } finally {
+    setButtonState('btnTitle', false, 'Test Packaging');
   }
 }
 
-function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
-
-init();
+// --- FEATURE 4: COMMUNITY ---
+async function runCommunityBrainstorm() {
+  const game = document.getElementById('commGame').value;
+  if (!game) return alert("Enter a game name!");
+  if (!YT_KEY) return alert("Add YouTube API key in Settings to read comments.");
+  
+  setButtonState('btnComm', true, 'Analyze Community');
+  showLoading('out-community', `Searching YouTube comments for ${game}`);
+  
+  try {
+    let comments = [];
+    const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(game + ' VR update')}&type=video&order=date&maxResults=3&key=${YT_KEY}`;
+    const searchRes = await fetch(searchUrl);
+    const searchData = await searchRes.json();
+    
+    if (searchData.items) {
+      for (const item of searchData.items) {
+        const vid = item.id.videoId;
+        const cUrl = `https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${vid}&maxResults=10&order=relevance&key=${YT_KEY}`;
+        const cRes = await fetch(cUrl);
+        if (cRes.ok) {
+          const cData = await cRes.json();
+          if (cData.items) {
+            cData.items.forEach(c => comments.push(c.snippet.topLevelComment.snippet.textDisplay));
+          }
+        }
+      }
+    }
+    
+    if (comments.length === 0) throw new Error("No comments found for this game recently.");
+    
+    showLoading('out-community', 'Analyzing complaints and ideas...');
+    const prompt = `I scraped these recent YouTube comments about the VR game "${game}":
+    
+    "${comments.slice(0, 15).join(' | ')}"
+    
+    Based on these comments:
+    1. What are the top 3 things players are complaining about?
+    2. What are they begging for?
+    3. Give me 5 video ideas that directly solve these complaints or answer these questions. The title of each idea MUST sound like a YouTube video.`;
+    
+    const result = await callGemini(prompt);
+    renderOutput('out-community', result);
+    
+  } catch (e) { 
+    renderOutput('out-community', `❌ **Error:** ${e.message}`); 
+  } finally {
+    setButtonState('btnComm', false, 'Analyze Community');
+  }
+}
 </script>
+
+<style>
+  .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
 </body>
-   </html>
+</html>
