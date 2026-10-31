@@ -4,9 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#050508">
-<title>VR Creator HQ — Ultimate Strategy</title>
+<title>VR Creator HQ — Ultimate</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
@@ -54,10 +53,9 @@
     border-radius: 14px; padding: 14px 16px; color: var(--text); font-size: 15px; 
     font-family: inherit; margin-bottom: 14px; outline: none; transition: border 0.2s;
   }
-  textarea { min-height: 100px; resize: vertical; }
+  textarea { min-height: 80px; resize: vertical; }
   input:focus, textarea:focus, select:focus { border-color: var(--accent); }
   
-  /* BEAUTIFUL MARKDOWN OUTPUT */
   .output { 
     background: #0a0a0f; border: 1px solid var(--border); border-radius: 16px; 
     padding: 20px; font-size: 14.5px; line-height: 1.7; max-height: 600px; 
@@ -88,42 +86,41 @@
     margin: 0; flex-shrink: 0; box-shadow: none; transition: all 0.2s;
   }
   nav button.active { color: #fff; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); }
+  .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 
 <header>
   <h1>VR Creator <span>HQ</span></h1>
-  <div class="badge">ULTIMATE</div>
+  <div class="badge">MULTI-AI</div>
 </header>
 
 <main>
 
-<!-- IDEAS & HOOKS -->
 <div id="s-ideas" class="section active">
   <div class="card">
-    <h2>💡 Ideas & Hooks Generator</h2>
-    <p>Scrapes live YouTube comments and uses AI to generate 5 highly clickable ideas, complete with the exact 3-second hook and a 3-act script.</p>
-    <label class="label">Enter Game or Context</label>
-    <input type="text" id="ideaGame" placeholder="e.g. Blade & Sorcery, Gorilla Tag...">
-    <button onclick="runIdeas()" id="btnIdeas">Generate Ideas & Scripts</button>
+    <h2>💡 Ideas & Hooks</h2>
+    <p>Generates 5 ideas with 3-second hooks and scripts. Scrapes YouTube comments for context.</p>
+    <label class="label">Game or Context</label>
+    <input type="text" id="ideaGame" placeholder="e.g. Blade & Sorcery">
+    <button onclick="runIdeas()" id="btnIdeas">Generate Ideas</button>
     <div class="output" id="out-ideas"></div>
   </div>
 </div>
 
-<!-- SHORTS FINDER -->
 <div id="s-shorts" class="section">
   <div class="card">
-    <h2>✂️ Shorts Finder</h2>
-    <p>Paste your raw video transcript. The AI finds the exact timestamps of the funniest/most intense moments.</p>
-    <label class="label">Paste Transcript (with timestamps if possible)</label>
-    <textarea id="shortsTranscript" placeholder="e.g. 00:00 I'm playing Blade and Sorcery... 04:20 OH MY GOD DID YOU SEE THAT?..." style="min-height:150px"></textarea>
-    <button onclick="runShortsFinder()" id="btnShorts">Find Shorts Moments</button>
+    <h2>✂️ Auto Shorts Finder</h2>
+    <p>Paste a YouTube Link. The app will auto-download the transcript and find the best Shorts timestamps.</p>
+    <label class="label">YouTube Video URL</label>
+    <input type="text" id="shortsUrl" placeholder="e.g. https://www.youtube.com/watch?v=...">
+    <button onclick="runShortsFinder()" id="btnShorts">Fetch Transcript & Find Clips</button>
     <div class="output" id="out-shorts"></div>
   </div>
 </div>
 
-<!-- TITLE & THUMBNAIL -->
 <div id="s-title" class="section">
   <div class="card">
     <h2>🏆 Packaging Tester</h2>
@@ -135,11 +132,10 @@
   </div>
 </div>
 
-<!-- COMMUNITY -->
 <div id="s-community" class="section">
   <div class="card">
     <h2>🧠 Community Brainstormer</h2>
-    <p>Reads recent YouTube comments for a game to find what players are complaining about, then gives you video ideas to solve their problems.</p>
+    <p>Finds what players are complaining about on YouTube and gives you video ideas to solve their problems.</p>
     <label class="label">Game Name</label>
     <input type="text" id="commGame" placeholder="e.g. Bonelab">
     <button onclick="runCommunityBrainstorm()" id="btnComm">Analyze Community</button>
@@ -147,16 +143,31 @@
   </div>
 </div>
 
-<!-- SETTINGS -->
 <div id="s-settings" class="section">
   <div class="card">
-    <h2>⚙️ API Settings</h2>
-    <p>Your keys are saved locally on your phone.</p>
+    <h2>⚙️ Multi-AI Settings</h2>
+    <p>Auto-Route tries Gemini first, then Groq, then OpenRouter if one fails.</p>
+    
+    <label class="label">Preferred AI Engine</label>
+    <select id="aiEngine">
+      <option value="auto">Auto-Route (Best Quality)</option>
+      <option value="gemini">Force Gemini</option>
+      <option value="groq">Force Groq (Ultra Fast)</option>
+      <option value="openrouter">Force OpenRouter</option>
+    </select>
+
     <label class="label">Gemini API Key</label>
-    <input type="password" id="geminiKey" placeholder="Paste Gemini API Key">
+    <input type="password" id="geminiKey" placeholder="Paste key...">
+    <label class="label">Groq API Key</label>
+    <input type="password" id="groqKey" placeholder="Paste key...">
+    <label class="label">OpenRouter API Key</label>
+    <input type="password" id="openRouterKey" placeholder="Paste key...">
     <label class="label">YouTube Data API Key</label>
-    <input type="password" id="ytKey" placeholder="Paste YouTube API Key">
-    <button onclick="saveKeys()" class="secondary" style="background:var(--accent); color:white;">Save Keys</button>
+    <input type="password" id="ytKey" placeholder="Paste key...">
+    <label class="label">Transcript API Key</label>
+    <input type="password" id="transcriptKey" placeholder="Paste key...">
+    
+    <button onclick="saveKeys()">Save All Keys</button>
   </div>
 </div>
 
@@ -171,13 +182,26 @@
 </nav>
 
 <script>
-let GEMINI_KEY = localStorage.getItem('vrhq_gemini_key') || '';
-let YT_KEY = localStorage.getItem('vrhq_yt_key') || '';
-const GEMINI_MODEL = 'gemini-2.5-flash';
+// State
+let keys = {
+  gemini: localStorage.getItem('vrhq_gemini') || '',
+  groq: localStorage.getItem('vrhq_groq') || '',
+  openrouter: localStorage.getItem('vrhq_openrouter') || '',
+  yt: localStorage.getItem('vrhq_yt') || '',
+  transcript: localStorage.getItem('vrhq_transcript') || '',
+  engine: localStorage.getItem('vrhq_engine') || 'auto'
+};
 
 // Init UI
-if (GEMINI_KEY) document.getElementById('geminiKey').value = '••••••••';
-if (YT_KEY) document.getElementById('ytKey').value = '••••••••';
+function loadKeys() {
+  document.getElementById('geminiKey').value = keys.gemini ? '••••••••' : '';
+  document.getElementById('groqKey').value = keys.groq ? '••••••••' : '';
+  document.getElementById('openRouterKey').value = keys.openrouter ? '••••••••' : '';
+  document.getElementById('ytKey').value = keys.yt ? '••••••••' : '';
+  document.getElementById('transcriptKey').value = keys.transcript ? '••••••••' : '';
+  document.getElementById('aiEngine').value = keys.engine;
+}
+loadKeys();
 
 function show(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -189,234 +213,196 @@ function show(id, btn) {
 
 function saveKeys() {
   const g = document.getElementById('geminiKey').value;
+  const gr = document.getElementById('groqKey').value;
+  const o = document.getElementById('openRouterKey').value;
   const y = document.getElementById('ytKey').value;
-  if (g && g !== '••••••••') { GEMINI_KEY = g; localStorage.setItem('vrhq_gemini_key', g); }
-  if (y && y !== '••••••••') { YT_KEY = y; localStorage.setItem('vrhq_yt_key', y); }
-  alert("Keys saved successfully!");
+  const t = document.getElementById('transcriptKey').value;
+  
+  if (g && g !== '••••••••') { keys.gemini = g; localStorage.setItem('vrhq_gemini', g); }
+  if (gr && gr !== '••••••••') { keys.groq = gr; localStorage.setItem('vrhq_groq', gr); }
+  if (o && o !== '••••••••') { keys.openrouter = o; localStorage.setItem('vrhq_openrouter', o); }
+  if (y && y !== '••••••••') { keys.yt = y; localStorage.setItem('vrhq_yt', y); }
+  if (t && t !== '••••••••') { keys.transcript = t; localStorage.setItem('vrhq_transcript', t); }
+  
+  keys.engine = document.getElementById('aiEngine').value;
+  localStorage.setItem('vrhq_engine', keys.engine);
+  
+  alert("All keys saved securely!");
 }
 
-// --- UI HELPERS ---
+// --- UI Helpers ---
 function renderOutput(id, text) {
-  const el = document.getElementById(id);
-  el.innerHTML = marked.parse(text);
-  el.classList.add('show');
+  document.getElementById(id).innerHTML = marked.parse(text);
+  document.getElementById(id).classList.add('show');
 }
-
 function showLoading(id, msg) {
-  const el = document.getElementById(id);
-  el.innerHTML = `<div style="color:var(--muted); font-family:monospace; display:flex; align-items:center; gap:10px;"><span class="spinner"></span> ${msg}...</div>`;
-  el.classList.add('show');
+  document.getElementById(id).innerHTML = `<div style="color:var(--muted); font-family:monospace; display:flex; align-items:center; gap:10px;"><span class="spinner"></span> ${msg}...</div>`;
+  document.getElementById(id).classList.add('show');
+}
+function setBtn(id, loading, text) {
+  const b = document.getElementById(id);
+  b.disabled = loading;
+  b.innerText = loading ? 'Working...' : text;
 }
 
-function setButtonState(id, isLoading, text) {
-  const btn = document.getElementById(id);
-  btn.disabled = isLoading;
-  btn.innerText = isLoading ? 'Working...' : text;
-}
+// --- MULTI-MODEL AI ROUTER ---
+async function callAI(prompt) {
+  let engines = keys.engine === 'auto' ? ['gemini', 'groq', 'openrouter'] : [keys.engine];
+  let lastError = '';
 
-// --- AI CORE ---
-async function callGemini(prompt) {
-  if (!GEMINI_KEY) throw new Error("Please add your Gemini API key in Settings.");
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`;
-  
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 45000); // 45s timeout
-  
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { temperature: 0.8, maxOutputTokens: 3000 }
-    }),
-    signal: controller.signal
-  });
-  
-  clearTimeout(timeoutId);
-  
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error?.message || "Gemini API failed. Check your key.");
+  for (const engine of engines) {
+    try {
+      if (engine === 'gemini' && keys.gemini) {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${keys.gemini}`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { temperature: 0.8 } })
+        });
+        if (!res.ok) throw new Error('Gemini limit');
+        const d = await res.json();
+        return d.candidates[0].content.parts[0].text;
+      }
+      
+      if (engine === 'groq' && keys.groq) {
+        const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+          method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${keys.groq}` },
+          body: JSON.stringify({ model: "llama-3.3-70b-versatile", messages: [{ role: "user", content: prompt }] })
+        });
+        if (!res.ok) throw new Error('Groq limit');
+        const d = await res.json();
+        return d.choices[0].message.content;
+      }
+
+      if (engine === 'openrouter' && keys.openrouter) {
+        const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+          method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${keys.openrouter}` },
+          body: JSON.stringify({ model: "meta-llama/llama-3.3-70b-instruct:free", messages: [{ role: "user", content: prompt }] })
+        });
+        if (!res.ok) throw new Error('OpenRouter limit');
+        const d = await res.json();
+        return d.choices[0].message.content;
+      }
+    } catch (e) {
+      lastError = e.message;
+    }
   }
-  
-  const data = await res.json();
-  return data.candidates[0].content.parts[0].text;
+  throw new Error(`All AI engines failed. Last error: ${lastError}. Please check your API keys.`);
 }
 
-// --- FEATURE 1: IDEAS & HOOKS ---
-async function runIdeas() {
-  const game = document.getElementById('ideaGame').value;
-  if (!game) return alert("Enter a game name!");
-  if (!YT_KEY) return alert("Add YouTube API key in Settings to scrape context.");
+// --- HELPER: YOUTUBE SEARCH & COMMENTS ---
+async function getYouTubeComments(query) {
+  if (!keys.yt) throw new Error("YouTube API key missing.");
+  let comments = [];
+  const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&order=relevance&maxResults=3&key=${keys.yt}`;
+  const searchRes = await fetch(searchUrl);
+  const searchData = await searchRes.json();
   
-  setButtonState('btnIdeas', true, 'Generate Ideas & Scripts');
-  showLoading('out-ideas', `Searching YouTube for ${game}`);
-  
-  try {
-    let comments = [];
-    // Scrape YouTube Comments
-    const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(game + ' VR')}&type=video&order=relevance&maxResults=3&key=${YT_KEY}`;
-    const searchRes = await fetch(searchUrl);
-    const searchData = await searchRes.json();
-    
-    if (searchData.items) {
-      for (const item of searchData.items) {
-        const vid = item.id.videoId;
-        const cUrl = `https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${vid}&maxResults=10&order=relevance&key=${YT_KEY}`;
-        const cRes = await fetch(cUrl);
-        if (cRes.ok) {
-          const cData = await cRes.json();
-          if (cData.items) {
-            cData.items.forEach(c => comments.push(c.snippet.topLevelComment.snippet.textDisplay));
-          }
-        }
+  if (searchData.items) {
+    for (const item of searchData.items) {
+      const cUrl = `https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${item.id.videoId}&maxResults=10&order=relevance&key=${keys.yt}`;
+      const cRes = await fetch(cUrl);
+      if (cRes.ok) {
+        const cData = await cRes.json();
+        if (cData.items) cData.items.forEach(c => comments.push(c.snippet.topLevelComment.snippet.textDisplay));
       }
     }
-    
-    showLoading('out-ideas', 'Generating ideas, hooks, and scripts...');
-    
-    const prompt = `You are a master YouTube strategist for VR gaming.
-    Game/Context: "${game}"
-    Recent YouTube Comments: "${comments.slice(0, 10).join(' | ')}"
-    
-    Generate 5 unique video ideas. For EACH idea, provide exactly this structure:
-    
-    ## Idea [Number]: [Title]
-    **The Concept:** A 1-sentence summary of what the video is.
-    **The 3-Second Hook:** The EXACT words you should say in the first 3 seconds to stop them scrolling.
-    **The Script Outline:**
-    - *Beginning:* How to set up the video.
-    - *Middle:* The main conflict, funny moment, or gameplay loop.
-    - *Payoff:* How to end it with a bang.
-    **Thumbnail Text:** 1-3 words for the thumbnail.
-    
-    Make sure the hooks are aggressive and highly clickable.`;
-    
-    const result = await callGemini(prompt);
-    renderOutput('out-ideas', result);
-    
-  } catch (e) { 
-    renderOutput('out-ideas', `❌ **Error:** ${e.message}`); 
-  } finally {
-    setButtonState('btnIdeas', false, 'Generate Ideas & Scripts');
   }
+  return comments;
 }
 
-// --- FEATURE 2: SHORTS FINDER ---
-async function runShortsFinder() {
-  const transcript = document.getElementById('shortsTranscript').value;
-  if (!transcript) return alert("Paste a transcript!");
-  
-  setButtonState('btnShorts', true, 'Find Shorts Moments');
-  showLoading('out-shorts', 'Scanning transcript for viral moments');
+// --- FEATURE 1: IDEAS ---
+async function runIdeas() {
+  const game = document.getElementById('ideaGame').value;
+  if (!game) return alert("Enter a game!");
+  setBtn('btnIdeas', true, 'Generate Ideas');
+  showLoading('out-ideas', 'Scraping comments...');
   
   try {
-    const prompt = `You are a Shorts editor. I have a transcript of a long VR gaming video.
-    Identify the top 3 moments that would make great YouTube Shorts.
-    
-    Transcript:
-    "${transcript.substring(0, 8000)}"
-    
-    For each moment, provide:
-    1. **Timestamp Range:** (e.g., 04:20 - 04:45)
-    2. **The Clip:** What is happening?
-    3. **The Hook:** What text should be on screen in the first 1 second?
-    4. **Why it works:** Why will this get views?`;
-    
-    const result = await callGemini(prompt);
-    renderOutput('out-shorts', result);
-  } catch (e) { 
-    renderOutput('out-shorts', `❌ **Error:** ${e.message}`); 
-  } finally {
-    setButtonState('btnShorts', false, 'Find Shorts Moments');
-  }
+    const comments = await getYouTubeComments(game + ' VR');
+    showLoading('out-ideas', 'Generating ideas with AI...');
+    const prompt = `Game: "${game}". Comments: "${comments.slice(0, 10).join(' | ')}".
+    Generate 5 video ideas. For EACH, include:
+    ## [Number]. [Title]
+    **Concept:** 1 sentence.
+    **Hook:** Exact words for the first 3 seconds.
+    **Script:** Beginning, Middle, Payoff.
+    **Thumbnail Text:** 1-3 words.`;
+    renderOutput('out-ideas', await callAI(prompt));
+  } catch (e) { renderOutput('out-ideas', `❌ **Error:** ${e.message}`); }
+  finally { setBtn('btnIdeas', false, 'Generate Ideas'); }
 }
 
-// --- FEATURE 3: PACKAGING TESTER ---
+// --- FEATURE 2: AUTO SHORTS ---
+async function runShortsFinder() {
+  const url = document.getElementById('shortsUrl').value;
+  if (!url) return alert("Enter a YouTube URL!");
+  if (!keys.transcript) return alert("Transcript API key missing in Settings.");
+  
+  setBtn('btnShorts', true, 'Fetch Transcript');
+  showLoading('out-shorts', 'Downloading transcript...');
+  
+  try {
+    // Extract Video ID
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+    if (!match) throw new Error("Invalid YouTube URL.");
+    const videoId = match[1];
+    
+    // Call Transcript API
+    const trUrl = `https://youtube-transcript.ai/transcript/${videoId}.txt?key=${keys.transcript}`;
+    const trRes = await fetch(trUrl);
+    if (!trRes.ok) throw new Error("Failed to get transcript. Check API key.");
+    const transcript = await trRes.text();
+    
+    showLoading('out-shorts', 'AI is finding the best clips...');
+    const prompt = `You are a Shorts editor. Here is a transcript:
+    "${transcript.substring(0, 8000)}"
+    
+    Find the top 3 moments for Shorts. For each:
+    1. **Timestamp Range:** (e.g., 04:20 - 04:45)
+    2. **The Hook:** Text on screen in first 1s.
+    3. **Why it works:** Why will this get views?`;
+    
+    renderOutput('out-shorts', await callAI(prompt));
+  } catch (e) { renderOutput('out-shorts', `❌ **Error:** ${e.message}`); }
+  finally { setBtn('btnShorts', false, 'Fetch Transcript & Find Clips'); }
+}
+
+// --- FEATURE 3: PACKAGING ---
 async function runTitleTester() {
   const concept = document.getElementById('titleConcept').value;
   if (!concept) return alert("Enter a concept!");
-  
-  setButtonState('btnTitle', true, 'Test Packaging');
-  showLoading('out-title', 'Analyzing psychological triggers');
+  setBtn('btnTitle', true, 'Test Packaging');
+  showLoading('out-title', 'Analyzing CTR psychology...');
   
   try {
-    const prompt = `You are a YouTube packaging expert. Video Concept: "${concept}".
-    
-    Create the ultimate clickable package:
-    
-    ## 10 High-CTR Titles
-    Generate 10 titles. Score each one out of 100 for Click-Through Rate (CTR). Tell me exactly WHY it got that score.
-    
-    ## 3 Thumbnail Concepts
-    Describe 3 visual ideas. 
-    For each idea, provide a prompt that I can copy and paste into Bing Image Creator (e.g., "A 3D render of a VR headset exploding with fire, neon lights, 8k --ar 16:9").
-    Also tell me what EXACTLY 1-3 words should be written on the thumbnail.`;
-    
-    const result = await callGemini(prompt);
-    renderOutput('out-title', result);
-  } catch (e) { 
-    renderOutput('out-title', `❌ **Error:** ${e.message}`); 
-  } finally {
-    setButtonState('btnTitle', false, 'Test Packaging');
-  }
+    const prompt = `Concept: "${concept}".
+    Generate:
+    ## 10 Titles with CTR Scores (out of 100) and reasons.
+    ## 3 Thumbnail Concepts with Bing Image Creator prompts and exact text.`;
+    renderOutput('out-title', await callAI(prompt));
+  } catch (e) { renderOutput('out-title', `❌ **Error:** ${e.message}`); }
+  finally { setBtn('btnTitle', false, 'Test Packaging'); }
 }
 
 // --- FEATURE 4: COMMUNITY ---
 async function runCommunityBrainstorm() {
   const game = document.getElementById('commGame').value;
-  if (!game) return alert("Enter a game name!");
-  if (!YT_KEY) return alert("Add YouTube API key in Settings to read comments.");
-  
-  setButtonState('btnComm', true, 'Analyze Community');
-  showLoading('out-community', `Searching YouTube comments for ${game}`);
+  if (!game) return alert("Enter a game!");
+  setBtn('btnComm', true, 'Analyze Community');
+  showLoading('out-community', 'Scraping recent complaints...');
   
   try {
-    let comments = [];
-    const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(game + ' VR update')}&type=video&order=date&maxResults=3&key=${YT_KEY}`;
-    const searchRes = await fetch(searchUrl);
-    const searchData = await searchRes.json();
+    const comments = await getYouTubeComments(game + ' VR update');
+    if (comments.length === 0) throw new Error("No comments found.");
     
-    if (searchData.items) {
-      for (const item of searchData.items) {
-        const vid = item.id.videoId;
-        const cUrl = `https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${vid}&maxResults=10&order=relevance&key=${YT_KEY}`;
-        const cRes = await fetch(cUrl);
-        if (cRes.ok) {
-          const cData = await cRes.json();
-          if (cData.items) {
-            cData.items.forEach(c => comments.push(c.snippet.topLevelComment.snippet.textDisplay));
-          }
-        }
-      }
-    }
-    
-    if (comments.length === 0) throw new Error("No comments found for this game recently.");
-    
-    showLoading('out-community', 'Analyzing complaints and ideas...');
-    const prompt = `I scraped these recent YouTube comments about the VR game "${game}":
-    
-    "${comments.slice(0, 15).join(' | ')}"
-    
-    Based on these comments:
-    1. What are the top 3 things players are complaining about?
-    2. What are they begging for?
-    3. Give me 5 video ideas that directly solve these complaints or answer these questions. The title of each idea MUST sound like a YouTube video.`;
-    
-    const result = await callGemini(prompt);
-    renderOutput('out-community', result);
-    
-  } catch (e) { 
-    renderOutput('out-community', `❌ **Error:** ${e.message}`); 
-  } finally {
-    setButtonState('btnComm', false, 'Analyze Community');
-  }
+    showLoading('out-community', 'Generating solutions...');
+    const prompt = `Comments for "${game}": "${comments.slice(0, 15).join(' | ')}".
+    1. Top 3 complaints.
+    2. What players want.
+    3. 5 video ideas that solve these problems.`;
+    renderOutput('out-community', await callAI(prompt));
+  } catch (e) { renderOutput('out-community', `❌ **Error:** ${e.message}`); }
+  finally { setBtn('btnComm', false, 'Analyze Community'); }
 }
 </script>
-
-<style>
-  .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s linear infinite; display: inline-block; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-</style>
 </body>
 </html>
